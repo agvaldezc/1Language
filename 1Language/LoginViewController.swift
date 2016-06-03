@@ -57,11 +57,11 @@ class LoginViewController: UIViewController {
             //Start request for server
             if (status == 0) {
                 
-                let request = NSMutableURLRequest(URL: NSURL(string: "http://app1anguage.consultinglab.com.mx/public/test")!)
+                let request = NSMutableURLRequest(URL: NSURL(string: "http://app1anguage.consultinglab.com.mx/public/auth")!)
                 
-                let appData = "/" + usernameField.text! + "/" + passwordField.text! + "/application"
+                let appData = "username=\(usernameField.text!)&password=\(passwordField.text!)&source=application"
                 
-                request.HTTPMethod = "GET"
+                request.HTTPMethod = "POST"
                 
                 request.HTTPBody = appData.dataUsingEncoding(NSUTF8StringEncoding)
                 
@@ -74,11 +74,16 @@ class LoginViewController: UIViewController {
                         return
                     }
                     //The server responsed whit a bad status
-                    if let httpStatus = response as? NSHTTPURLResponse where httpStatus.statusCode != 200
-                    {
-                        print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                        print("response = \(response)")
-                    }
+//                    if let httpStatus = response as? NSHTTPURLResponse where httpStatus.statusCode != 200
+//                    {
+//                        print("statusCode should be 200, but is \(httpStatus.statusCode)")
+//                        print("response = \(response)")
+//                    }
+                    
+                    print("responde =  \(response)")
+                    
+                    let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                    print("responseString = \(responseString)")
                     
                     dispatch_sync(dispatch_get_main_queue(), { () -> Void in
                         //We have a good response from the server
@@ -87,7 +92,7 @@ class LoginViewController: UIViewController {
                             //Read response as json
                             let response = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
                             //The status of login
-                            print("\(response)")
+                            //print("\(response)")
                             status = 1
 //                            if status != 1
 //                            {
