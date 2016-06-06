@@ -80,7 +80,7 @@ class LoginViewController: UIViewController {
 //                        print("response = \(response)")
 //                    }
                     
-                    print("responde =  \(response)")
+                    print("response =  \(response)")
                     
                     let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding)
                     print("responseString = \(responseString)")
@@ -90,47 +90,48 @@ class LoginViewController: UIViewController {
                         do
                         {
                             //Read response as json
-                            let response = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                            let jsonData = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                            
                             //The status of login
-                            //print("\(response)")
-                            status = 1
-//                            if status != 1
-//                            {
-//                                alertTitle = "Warning"
-//                                alertMessage = "Username or password is invalid"
-//                                alertButton = "Accept"
-//                            }
-//                            else
-//                            {
-//                                //print("LOGEADO")
+                            print("\(jsonData["status"])")
+                            
+                            status = jsonData["status"] as! Int
+                            
+                            if status == -2 {
+                                alertTitle = "Warning"
+                                alertMessage = "Username or password is invalid"
+                                alertButton = "Ok"
+                                
+                                let alert = AlertsController().errorAlert(alertTitle, alertMessage: alertMessage,alertButton: alertButton)
+                                
+                                self.presentViewController(alert, animated: true, completion: nil)
+                                
+                            }
+                            else
+                            {
 //                                let settings = NSUserDefaults.standardUserDefaults()
-//                                settings.setObject(self.usernameField.text, forKey:"user")
+//                                settings.setObject(self.usernameField.text, forKey:"username")
 //                                settings.setObject(self.passwordField.text, forKey:"password")
-//                                settings.setObject(response["session"] as! String, forKey:"session")
-//                                settings.setObject(response["profile"] as! String, forKey:"profile")
+//                                settings.setObject(jsonData["accounttype"] as! String, forKey:"profile")
 //                                settings.synchronize()
-//                                //Go to nex screen
-//                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                                let vc = storyboard.instantiateViewControllerWithIdentifier("home")
-//                                self.presentViewController(vc, animated: true, completion: nil)
-//                            }
+                                
+                                //Go to nex screen and confirm login
+//                                alertTitle = "Alert"
+//                                alertMessage = "Login successful"
+//                                alertButton = "Ok"
+//                                
+//                                let alert = AlertsController().errorAlert(alertTitle, alertMessage: alertMessage,alertButton: alertButton)
+//                                
+//                                self.presentViewController(alert, animated: true, completion: nil)
+
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                let vc = storyboard.instantiateViewControllerWithIdentifier("home")
+                                self.presentViewController(vc, animated: true, completion: nil)
+                            }
                         }
                         catch
                         {
                             print("error JSON: \(error)")
-                        }
-                        //print("second action \(status)")
-                        
-                        //If status is true then save the credentials and go to next screen
-                        if status == 1
-                        {
-                            alertTitle = "Alert"
-                            alertMessage = "Login successful"
-                            alertButton = "Ok"
-                            
-                            let alert = AlertsController().errorAlert(alertTitle, alertMessage: alertMessage,alertButton: alertButton)
-                            
-                            self.presentViewController(alert, animated: true, completion: nil)
                         }
                     })
                 }
