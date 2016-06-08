@@ -57,7 +57,7 @@ class LoginViewController: UIViewController {
             //Start request for server
             if (status == 0) {
                 
-                let request = NSMutableURLRequest(URL: NSURL(string: "http://app1anguage.consultinglab.com.mx/public/auth")!)
+                let request = NSMutableURLRequest(URL: NSURL(string: "http://app1anguage.consultinglab.com.mx/public/api/auth")!)
                 
                 let appData = "username=\(usernameField.text!)&password=\(passwordField.text!)&source=application"
                 
