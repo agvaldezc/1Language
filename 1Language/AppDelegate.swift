@@ -13,10 +13,33 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    //Plist file name
+    let plistFileName = "AccountInfo.plist"
+    
+    //Method used to get the Document file path to access AccountInfo.plist
+    func plistFilePath() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        
+        let documentsDirectory = paths[0]
+        
+        return documentsDirectory + "/" + plistFileName
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let filePath: String = self.plistFilePath()
+        
+        if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
+            
+            let accountInfo = NSMutableDictionary(contentsOfFile: filePath)
+            
+            print(accountInfo)
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let vc = storyboard.instantiateViewControllerWithIdentifier((accountInfo!["profile"] as? String)!)
+//            self.window?.rootViewController = vc
+        }
+        
         return true
     }
 

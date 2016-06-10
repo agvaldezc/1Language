@@ -13,6 +13,7 @@
 		E91F2E9D1CFF375200F7DBF8 /* _Language.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E91F2E9B1CFF375200F7DBF8 /* _Language.xcdatamodeld */; };
 		E91F2E9F1CFF375200F7DBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E91F2E9E1CFF375200F7DBF8 /* Assets.xcassets */; };
 		E91F2EA21CFF375200F7DBF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E91F2EA01CFF375200F7DBF8 /* LaunchScreen.storyboard */; };
+		E9AA17FB1D0A17BF006CAF50 /* AccountInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = E9AA17FA1D0A17BF006CAF50 /* AccountInfo.plist */; };
 		E9B927F01D05F306008ECFB8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B927EF1D05F306008ECFB8 /* HomeViewController.swift */; };
 		E9DD8D251D01E42900AB56BA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DD8D241D01E42900AB56BA /* LoginViewController.swift */; };
 		E9DD8D271D01F39400AB56BA /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DD8D261D01F39400AB56BA /* Reachability.swift */; };
@@ -28,6 +29,7 @@
 		E91F2E9E1CFF375200F7DBF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E91F2EA11CFF375200F7DBF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E91F2EA31CFF375200F7DBF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9AA17FA1D0A17BF006CAF50 /* AccountInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AccountInfo.plist; sourceTree = "<group>"; };
 		E9B927EF1D05F306008ECFB8 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		E9DD8D241D01E42900AB56BA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E9DD8D261D01F39400AB56BA /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = ../Reachability.swift; sourceTree = "<group>"; };
@@ -48,6 +50,7 @@
 		E91F2E881CFF375200F7DBF8 = {
 			isa = PBXGroup;
 			children = (
+				E9AA17FA1D0A17BF006CAF50 /* AccountInfo.plist */,
 				E91F2E931CFF375200F7DBF8 /* 1Language */,
 				E91F2E921CFF375200F7DBF8 /* Products */,
 			);
@@ -138,6 +141,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9AA17FB1D0A17BF006CAF50 /* AccountInfo.plist in Resources */,
 				E91F2EA21CFF375200F7DBF8 /* LaunchScreen.storyboard in Resources */,
 				E91F2E9F1CFF375200F7DBF8 /* Assets.xcassets in Resources */,
 				E91F2E9A1CFF375200F7DBF8 /* Main.storyboard in Resources */,

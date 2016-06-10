@@ -9,7 +9,7 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,6 +20,27 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //Function used to display corresponding view depending on account type
+    func showAccountTypeView(accountType: String) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewControllerWithIdentifier(accountType)
+        self.presentViewController(vc, animated: true, completion: nil)
+        
+    }
+    
+    //Method used to get the Document file path to access AccountInfo.plist
+    func plistFilePath() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        
+        let documentsDirectory = paths[0]
+        
+        return documentsDirectory + "/" + plistFileName
+    }
+    
+    //Plist file name
+    let plistFileName = "AccountInfo.plist"
     
     //Username and password field variables
     @IBOutlet weak var usernameField: UITextField!
@@ -33,7 +54,7 @@ class LoginViewController: UIViewController {
         var alertButton = "Ok"
         
         //Status of the operations made:
-        // 0 Nothing wrong
+        // 0 Initial state
         // -1 Username or password not filled
         // -2 Username or password are not valid
         // 1 Username and password validation successfull
@@ -116,17 +137,38 @@ class LoginViewController: UIViewController {
 //                                settings.synchronize()
                                 
                                 //Go to nex screen and confirm login
-//                                alertTitle = "Alert"
-//                                alertMessage = "Login successful"
-//                                alertButton = "Ok"
-//                                
-//                                let alert = AlertsController().errorAlert(alertTitle, alertMessage: alertMessage,alertButton: alertButton)
-//                                
-//                                self.presentViewController(alert, animated: true, completion: nil)
-
-                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                let vc = storyboard.instantiateViewControllerWithIdentifier("home")
-                                self.presentViewController(vc, animated: true, completion: nil)
+                                let profile = jsonData["accounttype"] as? String
+                                
+                                let accountInfo = NSMutableDictionary()
+//
+//                                accountInfo.setValue(jsonData["accounttype"] as? String, forKey: "profile")
+//                                accountInfo.setValue(jsonData["username"] as? String, forKey: "username")
+//                                accountInfo.setValue(jsonData["id"] as? String, forKey: "id")
+//                                accountInfo.setValue(jsonData["title"] as? String, forKey: "title")
+//                                accountInfo.setValue(jsonData["firstname"] as? String, forKey: "firstname")
+//                                accountInfo.setValue(jsonData["middlename"] as? String, forKey: "middlename")
+//                                accountInfo.setValue(jsonData["lastname"] as? String, forKey: "lastname")
+//                                accountInfo.setValue(jsonData["email"] as? String, forKey: "email")
+//
+//                                accountInfo.writeToFile(self.plistFilePath(), atomically: true)
+                                
+                                switch profile! {
+                                    case "coordinator":
+                                        self.showAccountTypeView(profile!)
+                                        break;
+                                    case "client":
+                                        self.showAccountTypeView(profile!)
+                                        break;
+                                    case "interpreter":
+                                        self.showAccountTypeView(profile!)
+                                        break;
+                                    case "manager":
+                                        self.showAccountTypeView(profile!)
+                                        break;
+                                    default:
+                                        print ("Error on showing view with profile type \(profile!)")
+                                        break;
+                                }
                             }
                         }
                         catch
