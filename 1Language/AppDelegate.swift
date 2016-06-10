@@ -34,10 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             let accountInfo = NSMutableDictionary(contentsOfFile: filePath)
             
-            print(accountInfo)
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let vc = storyboard.instantiateViewControllerWithIdentifier((accountInfo!["profile"] as? String)!)
-//            self.window?.rootViewController = vc
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewControllerWithIdentifier((accountInfo!["profile"] as? String)!)
+            self.window?.rootViewController = vc
         }
         
         return true

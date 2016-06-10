@@ -140,17 +140,19 @@ class LoginViewController: UIViewController {
                                 let profile = jsonData["accounttype"] as? String
                                 
                                 let accountInfo = NSMutableDictionary()
-//
-//                                accountInfo.setValue(jsonData["accounttype"] as? String, forKey: "profile")
-//                                accountInfo.setValue(jsonData["username"] as? String, forKey: "username")
-//                                accountInfo.setValue(jsonData["id"] as? String, forKey: "id")
-//                                accountInfo.setValue(jsonData["title"] as? String, forKey: "title")
-//                                accountInfo.setValue(jsonData["firstname"] as? String, forKey: "firstname")
-//                                accountInfo.setValue(jsonData["middlename"] as? String, forKey: "middlename")
-//                                accountInfo.setValue(jsonData["lastname"] as? String, forKey: "lastname")
-//                                accountInfo.setValue(jsonData["email"] as? String, forKey: "email")
-//
-//                                accountInfo.writeToFile(self.plistFilePath(), atomically: true)
+
+                                accountInfo.setValue(jsonData["accounttype"] as? String, forKey: "profile")
+                                accountInfo.setValue(jsonData["username"] as? String, forKey: "username")
+                                accountInfo.setValue(jsonData["id"] as? String, forKey: "id")
+                                accountInfo.setValue(jsonData["title"] as? String, forKey: "title")
+                                accountInfo.setValue(jsonData["firstname"] as? String, forKey: "firstname")
+                                accountInfo.setValue(jsonData["middlename"] as? String, forKey: "middlename")
+                                accountInfo.setValue(jsonData["lastname"] as? String, forKey: "lastname")
+                                accountInfo.setValue(jsonData["email"] as? String, forKey: "email")
+
+                                accountInfo.writeToFile(self.plistFilePath(), atomically: true)
+                                
+                                
                                 
                                 switch profile! {
                                     case "coordinator":

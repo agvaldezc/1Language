@@ -9,7 +9,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="_Language" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="login" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="LoginViewController" customModule="_Language" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -127,11 +127,11 @@
         <!--RequestRootViewController-->
         <scene sceneID="TxD-N9-h54">
             <objects>
-                <tableViewController title="RequestRootViewController" id="BG3-bb-set" sceneMemberID="viewController">
+                <tableViewController title="RequestRootViewController" id="BG3-bb-set" customClass="ClientDashboardController" customModule="_Language" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="2Fe-0r-42l">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="bLH-XC-4ja">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
@@ -147,7 +147,13 @@
                             <outlet property="delegate" destination="BG3-bb-set" id="Nhm-cd-T7L"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Request Dashboard" id="iBF-JY-PnT"/>
+                    <navigationItem key="navigationItem" title="Dashboard" id="iBF-JY-PnT">
+                        <barButtonItem key="rightBarButtonItem" image="Logout icon" id="tiI-ht-e52">
+                            <connections>
+                                <action selector="logoutConfirmation" destination="BG3-bb-set" id="vFA-S7-80s"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ow3-GU-SgL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -257,7 +263,7 @@
         <!--ClientTabBarController-->
         <scene sceneID="vZZ-mP-7Zy">
             <objects>
-                <tabBarController storyboardIdentifier="client" title="ClientTabBarController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oSc-1d-O5J" customClass="HomeViewController" customModule="_Language" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="client" title="ClientTabBarController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oSc-1d-O5J" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="SOO-hg-0D3">
                         <autoresizingMask key="autoresizingMask"/>
@@ -275,5 +281,6 @@
     </scenes>
     <resources>
         <image name="Logo" width="2327" height="1267"/>
+        <image name="Logout icon" width="25" height="25"/>
     </resources>
 </document>
