@@ -8,11 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		E91F2E951CFF375200F7DBF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F2E941CFF375200F7DBF8 /* AppDelegate.swift */; };
-		E91F2E971CFF375200F7DBF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F2E961CFF375200F7DBF8 /* ViewController.swift */; };
 		E91F2E9A1CFF375200F7DBF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E91F2E981CFF375200F7DBF8 /* Main.storyboard */; };
 		E91F2E9D1CFF375200F7DBF8 /* _Language.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E91F2E9B1CFF375200F7DBF8 /* _Language.xcdatamodeld */; };
 		E91F2E9F1CFF375200F7DBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E91F2E9E1CFF375200F7DBF8 /* Assets.xcassets */; };
 		E91F2EA21CFF375200F7DBF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E91F2EA01CFF375200F7DBF8 /* LaunchScreen.storyboard */; };
+		E979A4C01D0B1DF6005A2EE3 /* AccountInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E979A4BF1D0B1DF6005A2EE3 /* AccountInfoController.swift */; };
+		E979A4C21D0B2109005A2EE3 /* ClientDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E979A4C11D0B2109005A2EE3 /* ClientDashboardController.swift */; };
+		E97BA7711D0F16C5006A3623 /* InterpreterDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97BA7701D0F16C5006A3623 /* InterpreterDashboardController.swift */; };
+		E97BA7731D0F1708006A3623 /* CoordinatorDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97BA7721D0F1708006A3623 /* CoordinatorDashboardController.swift */; };
+		E97BA7751D0F172F006A3623 /* ManagerDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97BA7741D0F172F006A3623 /* ManagerDashboardController.swift */; };
 		E9DD8D251D01E42900AB56BA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DD8D241D01E42900AB56BA /* LoginViewController.swift */; };
 		E9DD8D271D01F39400AB56BA /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DD8D261D01F39400AB56BA /* Reachability.swift */; };
 		E9DD8D291D01F47000AB56BA /* AlertsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DD8D281D01F47000AB56BA /* AlertsController.swift */; };
@@ -21,12 +25,16 @@
 /* Begin PBXFileReference section */
 		E91F2E911CFF375200F7DBF8 /* 1Language.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 1Language.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E91F2E941CFF375200F7DBF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E91F2E961CFF375200F7DBF8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E91F2E991CFF375200F7DBF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E91F2E9C1CFF375200F7DBF8 /* _Language.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = _Language.xcdatamodel; sourceTree = "<group>"; };
 		E91F2E9E1CFF375200F7DBF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E91F2EA11CFF375200F7DBF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E91F2EA31CFF375200F7DBF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E979A4BF1D0B1DF6005A2EE3 /* AccountInfoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountInfoController.swift; sourceTree = "<group>"; };
+		E979A4C11D0B2109005A2EE3 /* ClientDashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientDashboardController.swift; sourceTree = "<group>"; };
+		E97BA7701D0F16C5006A3623 /* InterpreterDashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterpreterDashboardController.swift; sourceTree = "<group>"; };
+		E97BA7721D0F1708006A3623 /* CoordinatorDashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinatorDashboardController.swift; sourceTree = "<group>"; };
+		E97BA7741D0F172F006A3623 /* ManagerDashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagerDashboardController.swift; path = Assets.xcassets/ManagerDashboardController.swift; sourceTree = "<group>"; };
 		E9DD8D241D01E42900AB56BA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E9DD8D261D01F39400AB56BA /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = ../Reachability.swift; sourceTree = "<group>"; };
 		E9DD8D281D01F47000AB56BA /* AlertsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertsController.swift; sourceTree = "<group>"; };
@@ -62,18 +70,70 @@
 		E91F2E931CFF375200F7DBF8 /* 1Language */ = {
 			isa = PBXGroup;
 			children = (
-				E9DD8D261D01F39400AB56BA /* Reachability.swift */,
-				E9DD8D281D01F47000AB56BA /* AlertsController.swift */,
+				E97BA76F1D0F167D006A3623 /* Interpreter */,
+				E97BA76A1D0F14DB006A3623 /* Client */,
+				E97BA76E1D0F1640006A3623 /* Coordinator */,
+				E97BA76D1D0F163C006A3623 /* Manager */,
+				E97BA76C1D0F162D006A3623 /* Login */,
+				E97BA76B1D0F15FD006A3623 /* Extended Controllers */,
 				E91F2E941CFF375200F7DBF8 /* AppDelegate.swift */,
-				E91F2E961CFF375200F7DBF8 /* ViewController.swift */,
 				E91F2E981CFF375200F7DBF8 /* Main.storyboard */,
-				E9DD8D241D01E42900AB56BA /* LoginViewController.swift */,
 				E91F2E9E1CFF375200F7DBF8 /* Assets.xcassets */,
 				E91F2EA01CFF375200F7DBF8 /* LaunchScreen.storyboard */,
 				E91F2EA31CFF375200F7DBF8 /* Info.plist */,
 				E91F2E9B1CFF375200F7DBF8 /* _Language.xcdatamodeld */,
 			);
 			path = 1Language;
+			sourceTree = "<group>";
+		};
+		E97BA76A1D0F14DB006A3623 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				E979A4C11D0B2109005A2EE3 /* ClientDashboardController.swift */,
+			);
+			name = Client;
+			sourceTree = "<group>";
+		};
+		E97BA76B1D0F15FD006A3623 /* Extended Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E9DD8D261D01F39400AB56BA /* Reachability.swift */,
+				E9DD8D281D01F47000AB56BA /* AlertsController.swift */,
+				E979A4BF1D0B1DF6005A2EE3 /* AccountInfoController.swift */,
+			);
+			name = "Extended Controllers";
+			sourceTree = "<group>";
+		};
+		E97BA76C1D0F162D006A3623 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				E9DD8D241D01E42900AB56BA /* LoginViewController.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		E97BA76D1D0F163C006A3623 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				E97BA7741D0F172F006A3623 /* ManagerDashboardController.swift */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		E97BA76E1D0F1640006A3623 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				E97BA7721D0F1708006A3623 /* CoordinatorDashboardController.swift */,
+			);
+			name = Coordinator;
+			sourceTree = "<group>";
+		};
+		E97BA76F1D0F167D006A3623 /* Interpreter */ = {
+			isa = PBXGroup;
+			children = (
+				E97BA7701D0F16C5006A3623 /* InterpreterDashboardController.swift */,
+			);
+			name = Interpreter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,10 +210,14 @@
 			files = (
 				E9DD8D251D01E42900AB56BA /* LoginViewController.swift in Sources */,
 				E91F2E9D1CFF375200F7DBF8 /* _Language.xcdatamodeld in Sources */,
-				E91F2E971CFF375200F7DBF8 /* ViewController.swift in Sources */,
+				E979A4C01D0B1DF6005A2EE3 /* AccountInfoController.swift in Sources */,
+				E97BA7731D0F1708006A3623 /* CoordinatorDashboardController.swift in Sources */,
 				E9DD8D271D01F39400AB56BA /* Reachability.swift in Sources */,
+				E979A4C21D0B2109005A2EE3 /* ClientDashboardController.swift in Sources */,
 				E9DD8D291D01F47000AB56BA /* AlertsController.swift in Sources */,
 				E91F2E951CFF375200F7DBF8 /* AppDelegate.swift in Sources */,
+				E97BA7751D0F172F006A3623 /* ManagerDashboardController.swift in Sources */,
+				E97BA7711D0F16C5006A3623 /* InterpreterDashboardController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
