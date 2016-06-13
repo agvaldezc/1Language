@@ -130,12 +130,6 @@ class LoginViewController: UIViewController {
                             }
                             else
                             {
-//                                let settings = NSUserDefaults.standardUserDefaults()
-//                                settings.setObject(self.usernameField.text, forKey:"username")
-//                                settings.setObject(self.passwordField.text, forKey:"password")
-//                                settings.setObject(jsonData["accounttype"] as! String, forKey:"profile")
-//                                settings.synchronize()
-                                
                                 //Go to nex screen and confirm login
                                 let profile = jsonData["accounttype"] as? String
                                 
@@ -151,8 +145,6 @@ class LoginViewController: UIViewController {
                                 accountInfo.setValue(jsonData["email"] as? String, forKey: "email")
 
                                 accountInfo.writeToFile(self.plistFilePath(), atomically: true)
-                                
-                                
                                 
                                 switch profile! {
                                     case "coordinator":

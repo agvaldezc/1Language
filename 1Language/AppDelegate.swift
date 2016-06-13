@@ -13,22 +13,10 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    //Plist file name
-    let plistFileName = "AccountInfo.plist"
-    
-    //Method used to get the Document file path to access AccountInfo.plist
-    func plistFilePath() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        
-        let documentsDirectory = paths[0]
-        
-        return documentsDirectory + "/" + plistFileName
-    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        let filePath: String = self.plistFilePath()
+        let filePath: String = AccountInfoController().plistFilePath()
         
         if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
             
