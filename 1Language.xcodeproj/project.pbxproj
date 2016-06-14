@@ -17,6 +17,7 @@
 		E97BA7711D0F16C5006A3623 /* InterpreterDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97BA7701D0F16C5006A3623 /* InterpreterDashboardController.swift */; };
 		E97BA7731D0F1708006A3623 /* CoordinatorDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97BA7721D0F1708006A3623 /* CoordinatorDashboardController.swift */; };
 		E97BA7751D0F172F006A3623 /* ManagerDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97BA7741D0F172F006A3623 /* ManagerDashboardController.swift */; };
+		E99E69421D105E560075A173 /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99E69411D105E560075A173 /* AddUserViewController.swift */; };
 		E9DD8D251D01E42900AB56BA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DD8D241D01E42900AB56BA /* LoginViewController.swift */; };
 		E9DD8D271D01F39400AB56BA /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DD8D261D01F39400AB56BA /* Reachability.swift */; };
 		E9DD8D291D01F47000AB56BA /* AlertsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DD8D281D01F47000AB56BA /* AlertsController.swift */; };
@@ -35,6 +36,7 @@
 		E97BA7701D0F16C5006A3623 /* InterpreterDashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterpreterDashboardController.swift; sourceTree = "<group>"; };
 		E97BA7721D0F1708006A3623 /* CoordinatorDashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinatorDashboardController.swift; sourceTree = "<group>"; };
 		E97BA7741D0F172F006A3623 /* ManagerDashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagerDashboardController.swift; path = Assets.xcassets/ManagerDashboardController.swift; sourceTree = "<group>"; };
+		E99E69411D105E560075A173 /* AddUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
 		E9DD8D241D01E42900AB56BA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E9DD8D261D01F39400AB56BA /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = ../Reachability.swift; sourceTree = "<group>"; };
 		E9DD8D281D01F47000AB56BA /* AlertsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertsController.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				E9DD8D261D01F39400AB56BA /* Reachability.swift */,
 				E9DD8D281D01F47000AB56BA /* AlertsController.swift */,
 				E979A4BF1D0B1DF6005A2EE3 /* AccountInfoController.swift */,
+				E99E69411D105E560075A173 /* AddUserViewController.swift */,
 			);
 			name = "Extended Controllers";
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E99E69421D105E560075A173 /* AddUserViewController.swift in Sources */,
 				E9DD8D251D01E42900AB56BA /* LoginViewController.swift in Sources */,
 				E91F2E9D1CFF375200F7DBF8 /* _Language.xcdatamodeld in Sources */,
 				E979A4C01D0B1DF6005A2EE3 /* AccountInfoController.swift in Sources */,

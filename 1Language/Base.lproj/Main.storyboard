@@ -350,7 +350,7 @@
         <!--AddUserViewController-->
         <scene sceneID="pYJ-RG-fw6">
             <objects>
-                <viewController title="AddUserViewController" id="15F-ya-c7X" sceneMemberID="viewController">
+                <viewController title="AddUserViewController" id="15F-ya-c7X" customClass="AddUserViewController" customModule="_Language" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8bh-FJ-pzs"/>
                         <viewControllerLayoutGuide type="bottom" id="076-4U-GEA"/>
@@ -396,7 +396,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 </variation>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vpg-CM-qZW">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Optional" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vpg-CM-qZW">
                                 <rect key="frame" x="138" y="175" width="442" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -485,7 +485,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Employee ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fzv-sm-0xe">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Employee ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fzv-sm-0xe">
                                 <rect key="frame" x="30" y="445" width="100" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -494,7 +494,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 </variation>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vHj-c7-MOo">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vHj-c7-MOo">
                                 <rect key="frame" x="138" y="441" width="442" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -554,7 +554,21 @@
                             <constraint firstItem="AUv-jG-VeT" firstAttribute="leading" secondItem="3no-Os-fRs" secondAttribute="trailing" constant="8" symbolic="YES" id="yrl-wU-ykn"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Add User" id="Kgf-Em-Jsu"/>
+                    <navigationItem key="navigationItem" title="Add User" id="Kgf-Em-Jsu">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="save" id="mxd-As-6MV"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="accountTypeField" destination="YhC-3x-Vp7" id="Cl3-Lk-sK4"/>
+                        <outlet property="departmentField" destination="0DN-dW-6jJ" id="IB7-hP-YTk"/>
+                        <outlet property="emailField" destination="W3W-et-Plq" id="4ZW-bt-Wo8"/>
+                        <outlet property="employeeField" destination="vHj-c7-MOo" id="klR-Iw-Tdh"/>
+                        <outlet property="employeeLabel" destination="Fzv-sm-0xe" id="gZ3-xK-Spt"/>
+                        <outlet property="firstnamefield" destination="Wfq-B1-wSq" id="n1b-rv-EHp"/>
+                        <outlet property="lastnameField" destination="AUv-jG-VeT" id="weZ-z0-yRd"/>
+                        <outlet property="passwordField" destination="JOC-YF-Pge" id="ebD-aj-Aog"/>
+                        <outlet property="phoneField" destination="9Ab-jc-GHI" id="sMR-Vt-ppO"/>
+                        <outlet property="usernameField" destination="jsc-Dl-gUK" id="MqH-sH-Dwe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="irL-Ve-kke" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
