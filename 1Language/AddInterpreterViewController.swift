@@ -8,8 +8,8 @@
 
 import UIKit
 
-class AddCoordinatorViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
-
+class AddInterpreterViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
+    
     //Form fields
     @IBOutlet weak var departmentField: UITextField!
     @IBOutlet weak var firstnamefield: UITextField!
@@ -18,6 +18,8 @@ class AddCoordinatorViewController: UIViewController, UIPickerViewDataSource, UI
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var middlenameField: UITextField!
+    @IBOutlet weak var phoneField: UITextField!
+    @IBOutlet weak var employeeIdField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     
@@ -48,10 +50,10 @@ class AddCoordinatorViewController: UIViewController, UIPickerViewDataSource, UI
             
             //Add event listener to check what textfield is clicked to change
             //  picker data
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: (#selector(AddCoordinatorViewController.updatePicker)), name: UITextFieldTextDidBeginEditingNotification, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: (#selector(AddInterpreterViewController.updatePicker)), name: UITextFieldTextDidBeginEditingNotification, object: nil)
             
             //Tap gesture to hide keyboard or input
-            let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddCoordinatorViewController.dismissKeyboard))
+            let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddInterpreterViewController.dismissKeyboard))
             view.addGestureRecognizer(tap)
             
             //Make pickerView delegate our current view
@@ -167,7 +169,7 @@ class AddCoordinatorViewController: UIViewController, UIPickerViewDataSource, UI
             let request = NSMutableURLRequest(URL: NSURL(string: "http://app1anguage.consultinglab.com.mx/public/api/register")!)
             
             //Data to use in post method
-            var appData = "accountType=coordinator&firstname=\(firstnamefield.text!)&lastname=\(lastnameField.text!)&email=\(emailField.text!)&username=\(usernameField.text!)&password=\(passwordField.text!)&department=\(departmentField.text!)"
+            var appData = "accountType=interpreter&firstname=\(firstnamefield.text!)&lastname=\(lastnameField.text!)&email=\(emailField.text!)&username=\(usernameField.text!)&password=\(passwordField.text!)&department=\(departmentField.text!)&phone=\(phoneField.text!)&employeeId=\(employeeIdField.text!)"
             
             if (middlenameField.text?.characters.count > 0) {
                 appData += "&middlename=\(middlenameField.text!)"
@@ -254,10 +256,10 @@ class AddCoordinatorViewController: UIViewController, UIPickerViewDataSource, UI
     }
     
     func validInput() -> Bool {
-        if (firstnamefield.text == "" || lastnameField.text == "" || emailField.text == "" || usernameField.text == "" || passwordField.text == "" || departmentField.text == "") {
+        if (firstnamefield.text == "" || lastnameField.text == "" || emailField.text == "" || usernameField.text == "" || passwordField.text == "" || departmentField.text == "" || phoneField.text == "" || employeeIdField.text == "") {
             
             return false
-
+            
         } else {
             
             return true

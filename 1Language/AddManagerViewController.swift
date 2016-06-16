@@ -152,6 +152,7 @@ class AddManagerViewController: UIViewController, UIPickerViewDataSource, UIPick
     
     @IBAction func registerUser() {
         
+        //If the user is connected to the internet
         if (!Reachability.isConnectedToNetwork()) {
             
             let alert = AlertsController().confirmationAlert("Error", alertMessage: "You are not connected to the internet.", alertButton: "Ok")
@@ -167,15 +168,10 @@ class AddManagerViewController: UIViewController, UIPickerViewDataSource, UIPick
             let request = NSMutableURLRequest(URL: NSURL(string: "http://app1anguage.consultinglab.com.mx/public/api/register")!)
             
             //Data to use in post method
-            let appData : String
+            var appData = "accountType=manager&firstname=\(firstnamefield.text!)&lastname=\(lastnameField.text!)&email=\(emailField.text!)&username=\(usernameField.text!)&password=\(passwordField.text!)&department=\(departmentField.text!)"
             
             if (middlenameField.text?.characters.count > 0) {
-                
-                appData = "accountType=manager&firstname=\(firstnamefield.text!)&middlename=\(middlenameField.text!)&lastname=\(lastnameField.text!)&email=\(emailField.text!)&username=\(usernameField.text!)&password=\(passwordField.text!)&department=\(departmentField.text!)"
-                
-            } else {
-                
-                appData = "accountType=manager&firstname=\(firstnamefield.text!)&lastname=\(lastnameField.text!)&email=\(emailField.text!)&username=\(usernameField.text!)&password=\(passwordField.text!)&department=\(departmentField.text!)"
+                appData += "&middlename=\(middlenameField.text!)"
             }
             
             request.HTTPMethod = "POST"

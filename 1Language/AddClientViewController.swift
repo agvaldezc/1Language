@@ -8,9 +8,10 @@
 
 import UIKit
 
-class AddCoordinatorViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
-
+class AddClientViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
+    
     //Form fields
+    @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var departmentField: UITextField!
     @IBOutlet weak var firstnamefield: UITextField!
     @IBOutlet weak var lastnameField: UITextField!
@@ -18,6 +19,8 @@ class AddCoordinatorViewController: UIViewController, UIPickerViewDataSource, UI
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var middlenameField: UITextField!
+    @IBOutlet weak var phoneField: UITextField!
+    @IBOutlet weak var notesField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     
@@ -27,6 +30,7 @@ class AddCoordinatorViewController: UIViewController, UIPickerViewDataSource, UI
     
     //Picker data sources
     var departments : NSArray = []
+    let titles = ["Mr.", "Mrs.", "Miss.", "Dr."]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,10 +52,10 @@ class AddCoordinatorViewController: UIViewController, UIPickerViewDataSource, UI
             
             //Add event listener to check what textfield is clicked to change
             //  picker data
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: (#selector(AddCoordinatorViewController.updatePicker)), name: UITextFieldTextDidBeginEditingNotification, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: (#selector(AddClientViewController.updatePicker)), name: UITextFieldTextDidBeginEditingNotification, object: nil)
             
             //Tap gesture to hide keyboard or input
-            let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddCoordinatorViewController.dismissKeyboard))
+            let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddClientViewController.dismissKeyboard))
             view.addGestureRecognizer(tap)
             
             //Make pickerView delegate our current view
@@ -59,6 +63,7 @@ class AddCoordinatorViewController: UIViewController, UIPickerViewDataSource, UI
             
             //Add our pickerView as our input source for these fields
             departmentField.inputView = pickerView
+            titleField.inputView = pickerView
         }
     }
     
@@ -78,7 +83,9 @@ class AddCoordinatorViewController: UIViewController, UIPickerViewDataSource, UI
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if (departmentField.isFirstResponder() && departments.count > 0) {
+        if (titleField.isFirstResponder()) {
+            return titles.count
+        } else if (departmentField.isFirstResponder() && departments.count > 0) {
             return departments.count
         } else {
             return 1
@@ -86,7 +93,9 @@ class AddCoordinatorViewController: UIViewController, UIPickerViewDataSource, UI
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if (departmentField.isFirstResponder() && departments.count > 0) {
+        if (titleField.isFirstResponder()) {
+            return titles[row]
+        } else if (departmentField.isFirstResponder() && departments.count > 0) {
             return departments[row]["departmentname"] as? String
         } else {
             return "none"
@@ -94,7 +103,9 @@ class AddCoordinatorViewController: UIViewController, UIPickerViewDataSource, UI
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if (departmentField.isFirstResponder() && departments.count > 0) {
+        if (titleField.isFirstResponder()) {
+            titleField.text = titles[row]
+        } else if (departmentField.isFirstResponder() && departments.count > 0) {
             departmentField.text = departments[row]["departmentname"] as? String
         } else {
             return
@@ -167,10 +178,18 @@ class AddCoordinatorViewController: UIViewController, UIPickerViewDataSource, UI
             let request = NSMutableURLRequest(URL: NSURL(string: "http://app1anguage.consultinglab.com.mx/public/api/register")!)
             
             //Data to use in post method
-            var appData = "accountType=coordinator&firstname=\(firstnamefield.text!)&lastname=\(lastnameField.text!)&email=\(emailField.text!)&username=\(usernameField.text!)&password=\(passwordField.text!)&department=\(departmentField.text!)"
+            var appData = "accountType=client&firstname=\(firstnamefield.text!)&lastname=\(lastnameField.text!)&email=\(emailField.text!)&username=\(usernameField.text!)&password=\(passwordField.text!)&department=\(departmentField.text!)&phone=\(phoneField.text!)"
             
             if (middlenameField.text?.characters.count > 0) {
                 appData += "&middlename=\(middlenameField.text!)"
+            }
+            
+            if (titleField.text?.characters.count > 0) {
+                appData += "&title=\(titleField.text!)"
+            }
+            
+            if (notesField.text?.characters.count > 0) {
+                appData += "&notes=\(notesField.text!)"
             }
             
             request.HTTPMethod = "POST"
@@ -254,10 +273,10 @@ class AddCoordinatorViewController: UIViewController, UIPickerViewDataSource, UI
     }
     
     func validInput() -> Bool {
-        if (firstnamefield.text == "" || lastnameField.text == "" || emailField.text == "" || usernameField.text == "" || passwordField.text == "" || departmentField.text == "") {
+        if (firstnamefield.text == "" || lastnameField.text == "" || emailField.text == "" || usernameField.text == "" || passwordField.text == "" || departmentField.text == "" || phoneField.text == "") {
             
             return false
-
+            
         } else {
             
             return true
