@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E909964F1D1458380033C13F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E909964E1D1458380033C13F /* ProfileViewController.swift */; };
+		E90996511D14623C0033C13F /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90996501D14623C0033C13F /* ProfileTableViewController.swift */; };
 		E91F2E951CFF375200F7DBF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F2E941CFF375200F7DBF8 /* AppDelegate.swift */; };
 		E91F2E9A1CFF375200F7DBF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E91F2E981CFF375200F7DBF8 /* Main.storyboard */; };
 		E91F2E9D1CFF375200F7DBF8 /* _Language.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E91F2E9B1CFF375200F7DBF8 /* _Language.xcdatamodeld */; };
@@ -27,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E909964E1D1458380033C13F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		E90996501D14623C0033C13F /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		E91F2E911CFF375200F7DBF8 /* 1Language.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 1Language.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E91F2E941CFF375200F7DBF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E91F2E991CFF375200F7DBF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -59,6 +63,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E909964D1D14582C0033C13F /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				E909964E1D1458380033C13F /* ProfileViewController.swift */,
+				E90996501D14623C0033C13F /* ProfileTableViewController.swift */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
 		E91F2E881CFF375200F7DBF8 = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +91,7 @@
 		E91F2E931CFF375200F7DBF8 /* 1Language */ = {
 			isa = PBXGroup;
 			children = (
+				E909964D1D14582C0033C13F /* Profile */,
 				E97BA76F1D0F167D006A3623 /* Interpreter */,
 				E97BA76A1D0F14DB006A3623 /* Client */,
 				E97BA76E1D0F1640006A3623 /* Coordinator */,
@@ -226,12 +240,14 @@
 				E91F2E9D1CFF375200F7DBF8 /* _Language.xcdatamodeld in Sources */,
 				E979A4C01D0B1DF6005A2EE3 /* AccountInfoController.swift in Sources */,
 				E97778091D11E21F0045EAB0 /* AddManagerViewController.swift in Sources */,
+				E90996511D14623C0033C13F /* ProfileTableViewController.swift in Sources */,
 				E97BA7731D0F1708006A3623 /* CoordinatorDashboardController.swift in Sources */,
 				E9DD8D271D01F39400AB56BA /* Reachability.swift in Sources */,
 				E979A4C21D0B2109005A2EE3 /* ClientDashboardController.swift in Sources */,
 				E9DD8D291D01F47000AB56BA /* AlertsController.swift in Sources */,
 				E9A7D1021D1311AA00DCE2C7 /* AddInterpreterViewController.swift in Sources */,
 				E91F2E951CFF375200F7DBF8 /* AppDelegate.swift in Sources */,
+				E909964F1D1458380033C13F /* ProfileViewController.swift in Sources */,
 				E97BA7751D0F172F006A3623 /* ManagerDashboardController.swift in Sources */,
 				E97BA7711D0F16C5006A3623 /* InterpreterDashboardController.swift in Sources */,
 			);
