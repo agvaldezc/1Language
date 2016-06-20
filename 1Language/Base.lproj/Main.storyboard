@@ -606,7 +606,6 @@
         <!--ProfileViewController-->
         <scene sceneID="khP-9c-c30">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tDc-Zs-zM2" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController title="ProfileViewController" id="ndE-YC-7KX" customClass="ProfileViewController" customModule="_Language" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fZv-SO-AGr"/>
@@ -616,12 +615,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="04G-6C-QTf">
-                                <rect key="frame" x="0.0" y="272" width="600" height="176"/>
-                                <connections>
-                                    <segue destination="f6I-ks-dbV" kind="embed" id="ktQ-N1-07j"/>
-                                </connections>
-                            </containerView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fpI-pg-Fla">
                                 <rect key="frame" x="225" y="80" width="150" height="150"/>
                                 <constraints>
@@ -629,18 +622,41 @@
                                     <constraint firstAttribute="width" constant="150" id="cwS-G5-uG4"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jR-ZG-mky">
+                                <rect key="frame" x="225" y="80" width="150" height="150"/>
+                                <connections>
+                                    <action selector="profilePickMenu:" destination="ndE-YC-7KX" eventType="touchUpInside" id="i6B-VQ-v3F"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="FlS-Gu-iYc">
+                                <rect key="frame" x="291" y="237" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="04G-6C-QTf">
+                                <rect key="frame" x="0.0" y="272" width="600" height="176"/>
+                                <connections>
+                                    <segue destination="f6I-ks-dbV" kind="embed" id="ktQ-N1-07j"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="FlS-Gu-iYc" firstAttribute="centerX" secondItem="4jR-ZG-mky" secondAttribute="centerX" id="9f7-Ud-2gk"/>
                             <constraint firstItem="fpI-pg-Fla" firstAttribute="centerX" secondItem="9ha-pC-Erm" secondAttribute="centerX" id="FZj-1v-PJM"/>
+                            <constraint firstItem="4jR-ZG-mky" firstAttribute="top" secondItem="fpI-pg-Fla" secondAttribute="top" id="WK4-RV-bzW"/>
+                            <constraint firstItem="FlS-Gu-iYc" firstAttribute="top" secondItem="4jR-ZG-mky" secondAttribute="bottom" constant="8" symbolic="YES" id="a0k-5m-jTQ"/>
+                            <constraint firstItem="4jR-ZG-mky" firstAttribute="bottom" secondItem="fpI-pg-Fla" secondAttribute="bottom" id="e6J-DD-nsm"/>
+                            <constraint firstItem="4jR-ZG-mky" firstAttribute="trailing" secondItem="fpI-pg-Fla" secondAttribute="trailing" id="ffG-BT-djp"/>
+                            <constraint firstItem="4jR-ZG-mky" firstAttribute="leading" secondItem="fpI-pg-Fla" secondAttribute="leading" id="jIk-ed-RNo"/>
                             <constraint firstItem="fpI-pg-Fla" firstAttribute="top" secondItem="fZv-SO-AGr" secondAttribute="bottom" constant="16" id="m90-fV-raf"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="profileImage" destination="fpI-pg-Fla" id="8s0-PC-pVv"/>
                         <outlet property="profileInfoContainer" destination="04G-6C-QTf" id="jum-s9-hxq"/>
+                        <outlet property="uploadActivityMonitor" destination="FlS-Gu-iYc" id="Dzt-0X-v3m"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tDc-Zs-zM2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1671" y="-1997"/>
         </scene>

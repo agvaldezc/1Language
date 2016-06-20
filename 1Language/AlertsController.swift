@@ -38,4 +38,10 @@ class AlertsController {
         return alert
     }
     
+    func actionSheet(actionSheetMessage: String) -> UIAlertController {
+        
+        let actionSheet = UIAlertController(title: nil, message: actionSheetMessage, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        return actionSheet
+    }
 }
