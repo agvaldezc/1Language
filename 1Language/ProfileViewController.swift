@@ -27,9 +27,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         if (Reachability.isConnectedToNetwork()) {
             
             let url = NSURL(string: "http://app1anguage.consultinglab.com.mx/public/api/get-picture?username=\(accountInfo["username"] as! String)")
-            
-            print (url)
-            
+
             //Get data from URL
             let data = NSData(contentsOfURL: url!)
             
@@ -45,6 +43,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             }
             
             if (values.count > 0) {
+                
+//                ImageLoader.sharedLoader.imageForUrl("http://app1anguage.consultinglab.com.mx/public/\(values[0]["picpath"] as! String)", completionHandler:{(image: UIImage?, url: String) in
+//                    self.profileImage.image = image!
+//                })
                 
                 let url = NSURL(string: "http://app1anguage.consultinglab.com.mx/public/\(values[0]["picpath"] as! String)")
                 

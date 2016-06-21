@@ -143,6 +143,22 @@ class LoginViewController: UIViewController {
                                 accountInfo.setValue(jsonData["middlename"] as? String, forKey: "middlename")
                                 accountInfo.setValue(jsonData["lastname"] as? String, forKey: "lastname")
                                 accountInfo.setValue(jsonData["email"] as? String, forKey: "email")
+                                
+                                
+                                
+                                if (jsonData["phone"] as? String != nil) {
+                                    accountInfo.setValue(jsonData["phone"] as? String, forKey: "phone")
+                                } else {
+                                    print("no phone")
+                                    accountInfo.setValue("N/A", forKey: "phone")
+                                }
+                                
+                                if (jsonData["employeeid"] as? String != nil) {
+                                    accountInfo.setValue(jsonData["employeeid"] as? String, forKey: "employeeid")
+                                } else {
+                                    print("no employeeid")
+                                    accountInfo.setValue("N/A", forKey: "employeeid")
+                                }
 
                                 accountInfo.writeToFile(self.plistFilePath(), atomically: true)
                                 

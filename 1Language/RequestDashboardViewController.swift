@@ -1,15 +1,15 @@
 //
-//  ProfileTableViewController.swift
+//  RequestDashboardViewController.swift
 //  1Language
 //
-//  Created by Alan Valdez on 6/17/16.
+//  Created by Alan Valdez on 6/21/16.
 //  Copyright © 2016 CTI. All rights reserved.
 //
 
 import UIKit
 
-class ProfileTableViewController: UITableViewController {
-    
+class RequestDashboardViewController: UITableViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,20 +18,6 @@ class ProfileTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        accountInfo = loadAccountInfo()
-        
-        if (accountInfo["middlename"] != nil) {
-            nameLabel.text = "\(accountInfo["firstname"]!) \(accountInfo["middlename"]!) \(accountInfo["lastname"]!)"
-        } else {
-            nameLabel.text = "\(accountInfo["firstname"]!) \(accountInfo["lastname"]!)"
-        }
-        
-        emailLabel.text = "\(accountInfo["email"]!)"
-        
-        phoneLabel.text = "\(accountInfo["phone"]!)"
-        
-        usernameLabel.text = "\(accountInfo["username"]!)"
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,36 +27,14 @@ class ProfileTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    //Table cells
-    @IBOutlet weak var nameCell: UITableViewCell!
-    @IBOutlet weak var emailCell: UITableViewCell!
-    @IBOutlet weak var phoneCell: UITableViewCell!
-    @IBOutlet weak var usernameCell: UITableViewCell!
-    
-    //Required info labels
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var emailLabel: UILabel!
-    @IBOutlet weak var usernameLabel: UILabel!
-    
-    //Optional info labels and titles
-    @IBOutlet weak var phoneTitle: UILabel!
-    @IBOutlet weak var phoneLabel: UILabel!
-    
-    //Account Information dictionary
-    var accountInfo : NSDictionary = [:]
-    
-    //Load account information from app
-    func loadAccountInfo() -> NSDictionary {
-        
-        let filePath: String = AccountInfoController().plistFilePath()
-        
-        var info : NSDictionary = [:]
-        
-        if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
-            info = NSDictionary(contentsOfFile: filePath)!
-        }
-        
-        return info
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 0
+    }
+
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return 0
     }
 
     /*

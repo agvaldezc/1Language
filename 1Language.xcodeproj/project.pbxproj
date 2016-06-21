@@ -26,6 +26,9 @@
 		E9DD8D251D01E42900AB56BA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DD8D241D01E42900AB56BA /* LoginViewController.swift */; };
 		E9DD8D271D01F39400AB56BA /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DD8D261D01F39400AB56BA /* Reachability.swift */; };
 		E9DD8D291D01F47000AB56BA /* AlertsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DD8D281D01F47000AB56BA /* AlertsController.swift */; };
+		E9FA89AD1D19AE5A00981C6B /* RequestDashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FA89AC1D19AE5A00981C6B /* RequestDashboardViewController.swift */; };
+		E9FA89AF1D19AE7900981C6B /* NewRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FA89AE1D19AE7900981C6B /* NewRequestViewController.swift */; };
+		E9FA89B11D19B3B300981C6B /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FA89B01D19B3B300981C6B /* ImageLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +53,9 @@
 		E9DD8D241D01E42900AB56BA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E9DD8D261D01F39400AB56BA /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = ../Reachability.swift; sourceTree = "<group>"; };
 		E9DD8D281D01F47000AB56BA /* AlertsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertsController.swift; sourceTree = "<group>"; };
+		E9FA89AC1D19AE5A00981C6B /* RequestDashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestDashboardViewController.swift; sourceTree = "<group>"; };
+		E9FA89AE1D19AE7900981C6B /* NewRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRequestViewController.swift; sourceTree = "<group>"; };
+		E9FA89B01D19B3B300981C6B /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +97,7 @@
 		E91F2E931CFF375200F7DBF8 /* 1Language */ = {
 			isa = PBXGroup;
 			children = (
+				E9FA89AB1D19AE3E00981C6B /* Requests */,
 				E909964D1D14582C0033C13F /* Profile */,
 				E97BA76F1D0F167D006A3623 /* Interpreter */,
 				E97BA76A1D0F14DB006A3623 /* Client */,
@@ -123,6 +130,7 @@
 				E9DD8D261D01F39400AB56BA /* Reachability.swift */,
 				E9DD8D281D01F47000AB56BA /* AlertsController.swift */,
 				E979A4BF1D0B1DF6005A2EE3 /* AccountInfoController.swift */,
+				E9FA89B01D19B3B300981C6B /* ImageLoader.swift */,
 			);
 			name = "Extended Controllers";
 			sourceTree = "<group>";
@@ -160,6 +168,15 @@
 				E9A7D1011D1311AA00DCE2C7 /* AddInterpreterViewController.swift */,
 			);
 			name = Interpreter;
+			sourceTree = "<group>";
+		};
+		E9FA89AB1D19AE3E00981C6B /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				E9FA89AC1D19AE5A00981C6B /* RequestDashboardViewController.swift */,
+				E9FA89AE1D19AE7900981C6B /* NewRequestViewController.swift */,
+			);
+			name = Requests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,8 +259,11 @@
 				E97778091D11E21F0045EAB0 /* AddManagerViewController.swift in Sources */,
 				E90996511D14623C0033C13F /* ProfileTableViewController.swift in Sources */,
 				E97BA7731D0F1708006A3623 /* CoordinatorDashboardController.swift in Sources */,
+				E9FA89AD1D19AE5A00981C6B /* RequestDashboardViewController.swift in Sources */,
+				E9FA89B11D19B3B300981C6B /* ImageLoader.swift in Sources */,
 				E9DD8D271D01F39400AB56BA /* Reachability.swift in Sources */,
 				E979A4C21D0B2109005A2EE3 /* ClientDashboardController.swift in Sources */,
+				E9FA89AF1D19AE7900981C6B /* NewRequestViewController.swift in Sources */,
 				E9DD8D291D01F47000AB56BA /* AlertsController.swift in Sources */,
 				E9A7D1021D1311AA00DCE2C7 /* AddInterpreterViewController.swift in Sources */,
 				E91F2E951CFF375200F7DBF8 /* AppDelegate.swift in Sources */,
