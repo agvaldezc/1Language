@@ -44,15 +44,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             
             if (values.count > 0) {
                 
-//                ImageLoader.sharedLoader.imageForUrl("http://app1anguage.consultinglab.com.mx/public/\(values[0]["picpath"] as! String)", completionHandler:{(image: UIImage?, url: String) in
-//                    self.profileImage.image = image!
-//                })
+                ImageLoader.sharedLoader.imageForUrl("http://app1anguage.consultinglab.com.mx/public/\(values[0]["picpath"] as! String)", completionHandler:{(image: UIImage?, url: String) in
+                    self.profileImage.image = image!
+                })
                 
-                let url = NSURL(string: "http://app1anguage.consultinglab.com.mx/public/\(values[0]["picpath"] as! String)")
-                
-                let picData = NSData(contentsOfURL: url!)
-                
-                profileImage.image = UIImage(data: picData!)
+//                let url = NSURL(string: "http://app1anguage.consultinglab.com.mx/public/\(values[0]["picpath"] as! String)")
+//                
+//                let picData = NSData(contentsOfURL: url!)
+//                
+//                profileImage.image = UIImage(data: picData!)
                 profileImage.layer.cornerRadius = profileImage.frame.size.height/2
                 
                 profileImage.layer.borderWidth = 1
