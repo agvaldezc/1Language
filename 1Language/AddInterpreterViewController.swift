@@ -22,6 +22,10 @@ class AddInterpreterViewController: UIViewController, UIPickerViewDataSource, UI
     @IBOutlet weak var employeeIdField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
+    var activeField : UITextField?
+    
+    //Scroll view inside main view
+    @IBOutlet weak var scrollView: UIScrollView!
     
     //Created pickerView to use as value pickers for account type and
     //  department
@@ -43,6 +47,8 @@ class AddInterpreterViewController: UIViewController, UIPickerViewDataSource, UI
             
             self.presentViewController(alert, animated: true, completion: nil)
             
+            self.registrarseParaNotificacionesDeTeclado()
+            
         } else {
             
             //Load departments from web platform
@@ -54,6 +60,7 @@ class AddInterpreterViewController: UIViewController, UIPickerViewDataSource, UI
             
             //Tap gesture to hide keyboard or input
             let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddInterpreterViewController.dismissKeyboard))
+            
             view.addGestureRecognizer(tap)
             
             //Make pickerView delegate our current view
@@ -63,6 +70,15 @@ class AddInterpreterViewController: UIViewController, UIPickerViewDataSource, UI
             departmentField.inputView = pickerView
         }
     }
+    
+    //------------------------------------------------
+    private func registrarseParaNotificacionesDeTeclado() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(AddInterpreterViewController.keyboardWasShown(_:)),
+                                                         name:UIKeyboardWillShowNotification, object:nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(AddInterpreterViewController.keyboardWillBeHidden(_:)),
+                                                         name:UIKeyboardWillHideNotification, object:nil)
+    }
+    //-------------------------------------------------
     
     func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
@@ -114,6 +130,9 @@ class AddInterpreterViewController: UIViewController, UIPickerViewDataSource, UI
     
     //Enable or disable optional fields in layout
     func textFieldDidEndEditing(textField: UITextField) {
+        
+        activeField = textField
+        
         if (validInput()) {
             saveButton.enabled = true
         } else {
@@ -254,6 +273,35 @@ class AddInterpreterViewController: UIViewController, UIPickerViewDataSource, UI
             task.resume()
         }
     }
+    
+    
+    //------------------------------------------------
+    func keyboardWasShown (aNotification : NSNotification )
+    {
+        let kbSize = aNotification.userInfo![UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
+        
+        let contentInset = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0)
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
+        
+        var bkgndRect : CGRect = scrollView.frame
+        bkgndRect.size.height += kbSize.height;
+        activeField!.superview!.frame = bkgndRect;
+        scrollView.setContentOffset(CGPointMake(0.0, self.activeField!.frame.origin.y-kbSize.height), animated: true)
+    }
+    
+    func keyboardWillBeHidden (aNotification : NSNotification)
+    {
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsZero
+        scrollView.contentInset = contentInsets;
+        scrollView.scrollIndicatorInsets = contentInsets;
+    }
+    
+    func textFieldDidBeginEditing (textField : UITextField )
+    {
+        activeField = textField
+    }
+    //-------------------------------------------------------
     
     func validInput() -> Bool {
         if (firstnamefield.text == "" || lastnameField.text == "" || emailField.text == "" || usernameField.text == "" || passwordField.text == "" || departmentField.text == "" || phoneField.text == "" || employeeIdField.text == "") {

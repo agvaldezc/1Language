@@ -21,4 +21,18 @@ public class AccountInfoController {
     
     //Plist file name
     let plistFileName = "AccountInfo.plist"
+    
+    func getAccountInfo() -> NSDictionary {
+        
+        let filePath: String = AccountInfoController().plistFilePath()
+        
+        var accountInfo : NSDictionary = [:]
+        
+        if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
+            
+            accountInfo = NSDictionary(contentsOfFile: filePath)!
+        }
+        
+        return accountInfo
+    }
 }
