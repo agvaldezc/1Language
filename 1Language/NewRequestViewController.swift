@@ -26,7 +26,9 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
             accountInfo = AccountInfoController().getAccountInfo()
             
             pickerView.delegate = self
+            datePickerView.addTarget(self, action: #selector(NewRequestViewController.datePickerChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
             
+            prescheduleDateField.inputView = datePickerView
             languageField.inputView = pickerView
             genderPreferenceField.inputView = pickerView
             
@@ -92,6 +94,9 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
     //Picker view creation
     let pickerView = UIPickerView()
     
+    //Date picker view
+    let datePickerView = UIDatePicker()
+    
     //Account info
     var accountInfo : NSDictionary = [:]
     
@@ -109,38 +114,92 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
     
     @IBAction func saveRequest(sender: AnyObject) {
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://app1anguage.consultinglab.com.mx/public/api/make-interpreter-request")!)
-        
-        //Data to use in post method
-        var appData = "language=\(languageField.text!)&patientName=\(patientNameField.text!)&MRN=\(MRNField.text!)&genderPreference=\(genderPreferenceField.text!)&clientId=\(accountInfo["username"])&clientFirstname=\(accountInfo["firstname"])&clientLastname=\(accountInfo["lastname"])"
-        
-        if (notesField.text?.characters.count > 0) {
-            appData += "&comments=\(notesField.text!)"
+        if (Reachability.isConnectedToNetwork()) {
+            
+            let request = NSMutableURLRequest(URL: NSURL(string: "http://app1anguage.consultinglab.com.mx/public/api/make-interpreter-request")!)
+            
+            //Data to use in post method
+            var appData = "language=\(languageField.text!)&patientName=\(patientNameField.text!)&MRN=\(MRNField.text!)&genderPreference=\(genderPreferenceField.text!)&clientId=\(accountInfo["username"]!)&clientFirstname=\(accountInfo["firstname"]!)&clientLastname=\(accountInfo["lastname"]!)"
+            
+            if (notesField.text?.characters.count > 0) {
+                appData += "&comments=\(notesField.text!)"
+            }
+            
+            if (prescheduleDateField.text?.characters.count > 0) {
+                appData += "&prescheduleDate=\(prescheduleDateField.text!)&prescheduleReason=\(prescheduleReasonField.text!)"
+            }
+            
+            if (accountInfo["middlename"] != nil) {
+                appData += "&clientMiddlename=\(accountInfo["middlename"]!)"
+            }
+            
+            if (patientMRNField.text?.characters.count > 0) {
+                appData += "&patientMRN=\(patientMRNField.text!)"
+            }
+            
+            request.HTTPMethod = "POST"
+            
+            request.HTTPBody = appData.dataUsingEncoding(NSUTF8StringEncoding)
+            
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request)
+            {
+                //Error in session
+                data,response, error in guard error == nil && data != nil else
+                {
+                    print("error=\(error)")
+                    return
+                }
+                
+                print("response =  \(response)")
+                
+                let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                
+                print("responseString = \(responseString)")
+                
+                dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                    //We have a good response from the server
+                    do
+                    {
+                        //Read response as json
+                        let jsonData = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                        
+                        let status = jsonData["status"] as! Int
+                        
+                        if (status > 0) {
+                            let alert = AlertsController().confirmationAlert("Alert", alertMessage: "Your request has been addressed successfully, the ID number of your request is \(jsonData["requestId"] as! Int).", alertButton: "Ok")
+                            
+                            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
+                                self.navigationController?.popViewControllerAnimated(true)
+                            }))
+                            
+                            self.presentViewController(alert, animated: true, completion: nil)
+                        } else {
+                            let alert = AlertsController().confirmationAlert("Error", alertMessage: "There was an error trying to address your request, please try again later.", alertButton: "Ok")
+                            
+                            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
+                                self.navigationController?.popViewControllerAnimated(true)
+                            }))
+                            
+                            self.presentViewController(alert, animated: true, completion: nil)
+                        }
+                        
+                    } catch {
+                        print("error JSON: \(error)")
+                    }
+                })
+            }
+            
+            task.resume()
+            
+        } else {
+            let alert = AlertsController().confirmationAlert("Error", alertMessage: "You are not connected to the internet.", alertButton: "Ok")
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
+                self.navigationController?.popViewControllerAnimated(true)
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
         }
-        
-        if (prescheduleDateField.text?.characters.count > 0) {
-            appData += "&prescheduleDate=\(prescheduleDateField.text!)&prescheduleReason=\(prescheduleReasonField.text!)"
-        }
-        
-        if (accountInfo["middlename"] != nil) {
-            appData += "&clientMiddlename=\(accountInfo["middlename"])"
-        }
-        
-        print(appData)
-        
-//        request.HTTPMethod = "POST"
-//        
-//        request.HTTPBody = appData.dataUsingEncoding(NSUTF8StringEncoding)
-//        
-//        let task = NSURLSession.sharedSession().dataTaskWithRequest(request)
-//        {
-//            //Error in session
-//            data,response, error in guard error == nil && data != nil else
-//            {
-//                print("error=\(error)")
-//                return
-//            }
-//        }
     }
     
     func loadLanguages() -> NSArray {
@@ -238,5 +297,19 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
         } else {
             return true
         }
+    }
+    
+    func datePickerChanged(datePicker:UIDatePicker) {
+        
+        prescheduleDateField.text = formatDate(datePicker.date)
+        saveRequestButton.enabled = false
+    }
+    
+    func formatDate(date : NSDate) -> String {
+        let dateFormatter = NSDateFormatter()
+        
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        return dateFormatter.stringFromDate(date)
     }
 }
