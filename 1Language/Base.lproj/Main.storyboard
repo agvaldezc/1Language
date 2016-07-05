@@ -1773,7 +1773,7 @@
         <!--RequstDashboardViewController-->
         <scene sceneID="lQl-6C-VkB">
             <objects>
-                <tableViewController title="RequstDashboardViewController" id="S2b-3m-kNd" customClass="RequestDashboardViewController" customModule="_Language" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="reqeustDashbaord" title="RequstDashboardViewController" id="S2b-3m-kNd" customClass="RequestDashboardViewController" customModule="_Language" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="h9c-Lq-Oue">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1801,6 +1801,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addRequestButton" destination="3rD-fC-QzL" id="7tP-AS-gO5"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hwI-TR-FU2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2265,11 +2268,11 @@
         <image name="Request Dashboard Icon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aJh-D8-N6f"/>
-        <segue reference="GQw-Ih-RGi"/>
         <segue reference="Tza-QN-POH"/>
         <segue reference="iKz-cv-J1c"/>
         <segue reference="JhR-Xg-dbm"/>
         <segue reference="ltI-b0-biY"/>
+        <segue reference="feS-Kt-xuc"/>
+        <segue reference="mFH-Y9-f8K"/>
     </inferredMetricsTieBreakers>
 </document>
