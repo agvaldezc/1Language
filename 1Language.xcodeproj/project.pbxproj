@@ -20,6 +20,7 @@
 		E97BA7711D0F16C5006A3623 /* InterpreterDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97BA7701D0F16C5006A3623 /* InterpreterDashboardController.swift */; };
 		E97BA7731D0F1708006A3623 /* CoordinatorDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97BA7721D0F1708006A3623 /* CoordinatorDashboardController.swift */; };
 		E97BA7751D0F172F006A3623 /* ManagerDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97BA7741D0F172F006A3623 /* ManagerDashboardController.swift */; };
+		E99DE5601D2C119200FF383A /* RequestTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99DE55F1D2C119200FF383A /* RequestTableCell.swift */; };
 		E99E69421D105E560075A173 /* AddCoordinatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99E69411D105E560075A173 /* AddCoordinatorViewController.swift */; };
 		E9A7D1021D1311AA00DCE2C7 /* AddInterpreterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A7D1011D1311AA00DCE2C7 /* AddInterpreterViewController.swift */; };
 		E9A7D1041D13120800DCE2C7 /* AddClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A7D1031D13120800DCE2C7 /* AddClientViewController.swift */; };
@@ -47,6 +48,7 @@
 		E97BA7701D0F16C5006A3623 /* InterpreterDashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterpreterDashboardController.swift; sourceTree = "<group>"; };
 		E97BA7721D0F1708006A3623 /* CoordinatorDashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinatorDashboardController.swift; sourceTree = "<group>"; };
 		E97BA7741D0F172F006A3623 /* ManagerDashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagerDashboardController.swift; path = Assets.xcassets/ManagerDashboardController.swift; sourceTree = "<group>"; };
+		E99DE55F1D2C119200FF383A /* RequestTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTableCell.swift; sourceTree = "<group>"; };
 		E99E69411D105E560075A173 /* AddCoordinatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCoordinatorViewController.swift; sourceTree = "<group>"; };
 		E9A7D1011D1311AA00DCE2C7 /* AddInterpreterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddInterpreterViewController.swift; sourceTree = "<group>"; };
 		E9A7D1031D13120800DCE2C7 /* AddClientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddClientViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				E9DD8D281D01F47000AB56BA /* AlertsController.swift */,
 				E979A4BF1D0B1DF6005A2EE3 /* AccountInfoController.swift */,
 				E9FA89B01D19B3B300981C6B /* ImageLoader.swift */,
+				E99DE55F1D2C119200FF383A /* RequestTableCell.swift */,
 			);
 			name = "Extended Controllers";
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				E97BA7731D0F1708006A3623 /* CoordinatorDashboardController.swift in Sources */,
 				E9FA89AD1D19AE5A00981C6B /* RequestDashboardViewController.swift in Sources */,
 				E9FA89B11D19B3B300981C6B /* ImageLoader.swift in Sources */,
+				E99DE5601D2C119200FF383A /* RequestTableCell.swift in Sources */,
 				E9DD8D271D01F39400AB56BA /* Reachability.swift in Sources */,
 				E979A4C21D0B2109005A2EE3 /* ClientDashboardController.swift in Sources */,
 				E9FA89AF1D19AE7900981C6B /* NewRequestViewController.swift in Sources */,

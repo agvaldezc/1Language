@@ -10,6 +10,8 @@ import UIKit
 
 class RequestDashboardViewController: UITableViewController {
 
+    @IBOutlet var table: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,31 +35,33 @@ class RequestDashboardViewController: UITableViewController {
                 
                 let urlData = "accounttype=\(profile)&username=\(accountInfo["username"] as! String)"
                 
-                requests = getRequests(urlData)
+                getRequests(urlData)
                 break
             
             case "client":
                 
                 let urlData = "accounttype=\(profile)&username=\(accountInfo["username"] as! String)"
                 
-                requests = getRequests(urlData)
+                getRequests(urlData)
                 break
                 
             case "coordinator":
                
                 let urlData = "accounttype=\(profile)"
-                requests = getRequests(urlData)
+                getRequests(urlData)
                 break
             
             case "manager":
                 
                 let urlData = "accounttype=\(profile)"
-                requests = getRequests(urlData)
+                getRequests(urlData)
                 break
                 
             default:
                 break
             }
+            
+            table.reloadData()
             
         } else {
             let alert = AlertsController().confirmationAlert("Error", alertMessage: "You are not connected to the internet. Please try again later.", alertButton: "Ok")
@@ -90,18 +94,37 @@ class RequestDashboardViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return requests.count
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("requestCell", forIndexPath: indexPath) as! RequestTableCell
 
-        // Configure the cell...
+        cell.request = requests[indexPath.row] as? NSDictionary
+        
+        cell.requestIDLabel.text = cell.request!["id"] as? String
+        cell.patientNameLabel.text = cell.request!["patientname"] as? String
+        cell.languageLabel.text = cell.request!["language"] as? String
+        cell.departmentLabel.text = cell.request!["department"] as? String
+        cell.statusLabel.text = cell.request!["requeststatus"] as? String
+        
+        cell.statusLabel.textColor = UIColor.redColor()
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd HH:mm:ss"
+        let date = dateFormatter.dateFromString(cell.request!["requestmade"] as! String)
+        
+        let correctFormat = NSDateFormatter()
+        correctFormat.dateFormat = "MMM d, H:mm a"
+        let stringDate = correctFormat.stringFromDate(date!)
+        
+        cell.dateLabel.text = stringDate
 
         return cell
     }
-    */
+ 
 
     /*
     // Override to support conditional editing of the table view.
@@ -148,51 +171,22 @@ class RequestDashboardViewController: UITableViewController {
     }
     */
     
-    func getRequests(urlData : String) -> NSArray {
+    func getRequests(urlData : String) {
         
-        var requests : NSArray = []
+        let url = "http://app1anguage.consultinglab.com.mx/public/api/get-requests?\(urlData)"
         
+        let convertedURL = NSURL(string: url)
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://app1anguage.consultinglab.com.mx/public/api/get-requests")!)
+        let data = NSData(contentsOfURL: convertedURL!)
         
-        let appData = urlData
-        
-        request.HTTPMethod = "POST"
-        
-        request.HTTPBody = appData.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request)
-        {
-            //Error in session
-            data,response, error in guard error == nil && data != nil else
-            {
-                print("error=\(error)")
-                return
-            }
-            
-            print("response =  \(response)")
-            
-            let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            
-            print("responseString = \(responseString)")
-            
-            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
-                //We have a good response from the server
                 do
                 {
                     //Read response as json
-                    requests = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments) as! NSArray
-                    
-
+                    self.requests = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments) as! NSArray
                 }
                 catch
                 {
                     print("error JSON: \(error)")
                 }
-            })
-        }
-        task.resume()
-        
-        return requests
     }
 }

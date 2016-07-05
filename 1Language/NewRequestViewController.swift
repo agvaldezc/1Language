@@ -22,6 +22,7 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
         if (Reachability.isConnectedToNetwork()) {
             
             languages = loadLanguages()
+            departments = getDepartments()
             
             accountInfo = AccountInfoController().getAccountInfo()
             
@@ -31,6 +32,8 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
             prescheduleDateField.inputView = datePickerView
             languageField.inputView = pickerView
             genderPreferenceField.inputView = pickerView
+            
+            departmentField.inputView = pickerView
             
             genderPreferenceField.text = "None"
             
@@ -100,6 +103,9 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
     //Account info
     var accountInfo : NSDictionary = [:]
     
+    //Departments
+    var departments : NSArray = []
+    
     @IBOutlet weak var languageField: UITextField!
     @IBOutlet weak var patientNameField: UITextField!
     @IBOutlet weak var patientMRNField: UITextField!
@@ -108,6 +114,7 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
     @IBOutlet weak var genderPreferenceField: UITextField!
     @IBOutlet weak var prescheduleDateField: UITextField!
     @IBOutlet weak var prescheduleReasonField: UITextField!
+    @IBOutlet weak var departmentField: UITextField!
     
     @IBOutlet weak var prescheduleReasonLabel: UILabel!
     @IBOutlet weak var saveRequestButton: UIBarButtonItem!
@@ -119,7 +126,7 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
             let request = NSMutableURLRequest(URL: NSURL(string: "http://app1anguage.consultinglab.com.mx/public/api/make-interpreter-request")!)
             
             //Data to use in post method
-            var appData = "language=\(languageField.text!)&patientName=\(patientNameField.text!)&MRN=\(MRNField.text!)&genderPreference=\(genderPreferenceField.text!)&clientId=\(accountInfo["username"]!)&clientFirstname=\(accountInfo["firstname"]!)&clientLastname=\(accountInfo["lastname"]!)"
+            var appData = "language=\(languageField.text!)&patientName=\(patientNameField.text!)&MRN=\(MRNField.text!)&genderPreference=\(genderPreferenceField.text!)&clientId=\(accountInfo["username"]!)&clientFirstname=\(accountInfo["firstname"]!)&clientLastname=\(accountInfo["lastname"]!)&department=\(departmentField.text!)"
             
             if (notesField.text?.characters.count > 0) {
                 appData += "&comments=\(notesField.text!)"
@@ -240,6 +247,8 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
             return languages.count
         } else if (genderPreferenceField.isFirstResponder()){
             return genderPreferences.count
+        } else if (departmentField.isFirstResponder() && departments.count > 0){
+            return departments.count
         } else {
             return 1
         }
@@ -250,6 +259,8 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
             return languages[row]["languagename"] as? String
         } else if (genderPreferenceField.isFirstResponder()){
             return genderPreferences[row]
+        } else if (departmentField.isFirstResponder() && departments.count > 0){
+            return departments[row]["departmentname"] as? String
         } else {
             return "none"
         }
@@ -260,6 +271,8 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
             languageField.text = languages[row]["languagename"] as? String
         } else if (genderPreferenceField.isFirstResponder()){
             return genderPreferenceField.text = genderPreferences[row]
+        } else if (departmentField.isFirstResponder() && departments.count > 0){
+            return departmentField.text = departments[row]["departmentname"] as? String
         } else {
             return
         }
@@ -291,7 +304,7 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
     }
     
     func validInput() -> Bool {
-        if (languageField.text == "" || patientNameField.text == "" || MRNField.text == "" || (prescheduleReasonField.enabled && prescheduleReasonField.text == "")) {
+        if (languageField.text == "" || patientNameField.text == "" || MRNField.text == "" || departmentField.text == "" || (prescheduleReasonField.enabled && prescheduleReasonField.text == "")) {
             return false
             
         } else {
@@ -311,5 +324,35 @@ class NewRequestViewController: UIViewController, UIPickerViewDataSource, UIPick
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         return dateFormatter.stringFromDate(date)
+    }
+    
+    //Get departments from web platform
+    func getDepartments() -> NSArray {
+        
+        //Initial empty array
+        var values : NSArray = []
+        
+        //URL to recover departments
+        let url = NSURL(string: "http://app1anguage.consultinglab.com.mx/public/api/get-departments")
+        
+        //Get data from URL
+        let data = NSData(contentsOfURL: url!)
+        
+        //If data returned is null, show alert to say that service
+        //  is unavailable and return to dashboard
+        if (data == nil) {
+            let alert = UIAlertController(title: "Error", message: "Could not load data from server. Service currently unavailable.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
+                self.navigationController?.popViewControllerAnimated(true)
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+        } else {
+            values = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
+        }
+        
+        return values
     }
 }
