@@ -14,6 +14,7 @@
 		E91F2E9D1CFF375200F7DBF8 /* _Language.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E91F2E9B1CFF375200F7DBF8 /* _Language.xcdatamodeld */; };
 		E91F2E9F1CFF375200F7DBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E91F2E9E1CFF375200F7DBF8 /* Assets.xcassets */; };
 		E91F2EA21CFF375200F7DBF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E91F2EA01CFF375200F7DBF8 /* LaunchScreen.storyboard */; };
+		E957E7F01D2DD22D004E9A32 /* SelectedRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E957E7EF1D2DD22D004E9A32 /* SelectedRequestViewController.swift */; };
 		E97778091D11E21F0045EAB0 /* AddManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97778081D11E21F0045EAB0 /* AddManagerViewController.swift */; };
 		E979A4C01D0B1DF6005A2EE3 /* AccountInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E979A4BF1D0B1DF6005A2EE3 /* AccountInfoController.swift */; };
 		E979A4C21D0B2109005A2EE3 /* ClientDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E979A4C11D0B2109005A2EE3 /* ClientDashboardController.swift */; };
@@ -42,6 +43,7 @@
 		E91F2E9E1CFF375200F7DBF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E91F2EA11CFF375200F7DBF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E91F2EA31CFF375200F7DBF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E957E7EF1D2DD22D004E9A32 /* SelectedRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedRequestViewController.swift; sourceTree = "<group>"; };
 		E97778081D11E21F0045EAB0 /* AddManagerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddManagerViewController.swift; sourceTree = "<group>"; };
 		E979A4BF1D0B1DF6005A2EE3 /* AccountInfoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountInfoController.swift; sourceTree = "<group>"; };
 		E979A4C11D0B2109005A2EE3 /* ClientDashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientDashboardController.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 			children = (
 				E9FA89AC1D19AE5A00981C6B /* RequestDashboardViewController.swift */,
 				E9FA89AE1D19AE7900981C6B /* NewRequestViewController.swift */,
+				E957E7EF1D2DD22D004E9A32 /* SelectedRequestViewController.swift */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 				E9FA89B11D19B3B300981C6B /* ImageLoader.swift in Sources */,
 				E99DE5601D2C119200FF383A /* RequestTableCell.swift in Sources */,
 				E9DD8D271D01F39400AB56BA /* Reachability.swift in Sources */,
+				E957E7F01D2DD22D004E9A32 /* SelectedRequestViewController.swift in Sources */,
 				E979A4C21D0B2109005A2EE3 /* ClientDashboardController.swift in Sources */,
 				E9FA89AF1D19AE7900981C6B /* NewRequestViewController.swift in Sources */,
 				E9DD8D291D01F47000AB56BA /* AlertsController.swift in Sources */,

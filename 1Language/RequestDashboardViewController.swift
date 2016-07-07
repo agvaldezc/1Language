@@ -9,15 +9,15 @@
 import UIKit
 
 class RequestDashboardViewController: UITableViewController {
-
+    
     @IBOutlet var table: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
@@ -37,7 +37,7 @@ class RequestDashboardViewController: UITableViewController {
                 
                 getRequests(urlData)
                 break
-            
+                
             case "client":
                 
                 let urlData = "accounttype=\(profile)&username=\(accountInfo["username"] as! String)"
@@ -46,11 +46,11 @@ class RequestDashboardViewController: UITableViewController {
                 break
                 
             case "coordinator":
-               
+                
                 let urlData = "accounttype=\(profile)"
                 getRequests(urlData)
                 break
-            
+                
             case "manager":
                 
                 let urlData = "accounttype=\(profile)"
@@ -75,42 +75,61 @@ class RequestDashboardViewController: UITableViewController {
             self.presentViewController(alert, animated: true, completion: nil)
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     @IBOutlet weak var addRequestButton: UIBarButtonItem!
     var accountInfo : NSDictionary = [:]
     var requests : NSArray = []
+    var selectedRequest : NSDictionary = [:]
     
     // MARK: - Table view data source
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return requests.count
     }
-
+    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("requestCell", forIndexPath: indexPath) as! RequestTableCell
-
+        
         cell.request = requests[indexPath.row] as? NSDictionary
         
-        cell.requestIDLabel.text = cell.request!["id"] as? String
-        cell.patientNameLabel.text = cell.request!["patientname"] as? String
+        cell.requestIDLabel.text = "Request ID: \((cell.request!["id"] as? String)!)"
+        cell.patientNameLabel.text = "Patient: \((cell.request!["patientname"] as? String)!)"
         cell.languageLabel.text = cell.request!["language"] as? String
-        cell.departmentLabel.text = cell.request!["department"] as? String
-        cell.statusLabel.text = cell.request!["requeststatus"] as? String
+        cell.departmentLabel.text = cell.request!["department"] as? String!
         
-        cell.statusLabel.textColor = UIColor.redColor()
+        let requestStatus = cell.request!["requeststatus"] as? String
+        
+        cell.statusLabel.text = "Status: \(requestStatus!)"
+        
+        switch (requestStatus!) {
+        case "pending":
+            cell.statusLabel.textColor = UIColor.orangeColor()
+            break;
+        case "cancelled":
+            cell.statusLabel.textColor = UIColor.redColor()
+            break;
+        case "accepted":
+            cell.statusLabel.textColor = UIColor.blueColor()
+            break;
+        case "complete":
+            cell.statusLabel.textColor = UIColor.greenColor()
+            break;
+        default:
+            break;
+        }
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "YYYY-MM-dd HH:mm:ss"
@@ -120,56 +139,74 @@ class RequestDashboardViewController: UITableViewController {
         correctFormat.dateFormat = "MMM d, H:mm a"
         let stringDate = correctFormat.stringFromDate(date!)
         
-        cell.dateLabel.text = stringDate
-
+        cell.dateLabel.text = "Apointment: \(stringDate)"
+        
         return cell
     }
- 
-
+    
+    
     /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
+     // Override to support conditional editing of the table view.
+     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+     // Return false if you do not want the specified item to be editable.
+     return true
+     }
+     */
+    
     /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
+     // Override to support editing the table view.
+     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+     if editingStyle == .Delete {
+     // Delete the row from the data source
+     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+     } else if editingStyle == .Insert {
+     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+     }
+     }
+     */
+    
     /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
+     // Override to support rearranging the table view.
+     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+     
+     }
+     */
+    
     /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
+     // Override to support conditional rearranging of the table view.
+     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+     // Return false if you do not want the item to be re-orderable.
+     return true
+     }
+     */
+    
+    
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if (segue.identifier == "selectedRequestSegue") {
+            let selectedRequestView = segue.destinationViewController as! SelectedRequestViewController
+            
+            selectedRequestView.request = selectedRequest
+        }
     }
-    */
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let index = tableView.indexPathForSelectedRow
+        
+        let cell = tableView.cellForRowAtIndexPath(index!) as! RequestTableCell
+        
+        selectedRequest = cell.request!
+        
+        self.performSegueWithIdentifier("selectedRequestSegue", sender: self)
+        
+    }
     
     func getRequests(urlData : String) {
         
@@ -179,14 +216,14 @@ class RequestDashboardViewController: UITableViewController {
         
         let data = NSData(contentsOfURL: convertedURL!)
         
-                do
-                {
-                    //Read response as json
-                    self.requests = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments) as! NSArray
-                }
-                catch
-                {
-                    print("error JSON: \(error)")
-                }
+        do
+        {
+            //Read response as json
+            self.requests = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments) as! NSArray
+        }
+        catch
+        {
+            print("error JSON: \(error)")
+        }
     }
 }

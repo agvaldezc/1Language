@@ -13,6 +13,21 @@ class RequestTableCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        requestIDLabel.sizeToFit()
+        patientNameLabel.sizeToFit()
+        languageLabel.sizeToFit()
+        departmentLabel.sizeToFit()
+        statusLabel.sizeToFit()
+        dateLabel.sizeToFit()
+        
+        requestIDLabel.adjustsFontSizeToFitWidth = true
+        patientNameLabel.adjustsFontSizeToFitWidth = true
+        languageLabel.adjustsFontSizeToFitWidth = true
+        departmentLabel.adjustsFontSizeToFitWidth = true
+        statusLabel.adjustsFontSizeToFitWidth = true
+        dateLabel.adjustsFontSizeToFitWidth = true
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
