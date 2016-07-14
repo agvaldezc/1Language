@@ -107,8 +107,8 @@ class RequestDashboardViewController: UITableViewController {
         
         cell.requestIDLabel.text = "Request ID: \((cell.request!["id"] as? String)!)"
         cell.patientNameLabel.text = "Patient: \((cell.request!["patientname"] as? String)!)"
-        cell.languageLabel.text = cell.request!["language"] as? String
-        cell.departmentLabel.text = cell.request!["department"] as? String!
+        cell.languageLabel.text = "Language: \((cell.request!["language"] as? String)!)"
+        cell.departmentLabel.text = "Department: \((cell.request!["department"] as? String)!)"
         
         let requestStatus = cell.request!["requeststatus"] as? String
         
@@ -139,7 +139,7 @@ class RequestDashboardViewController: UITableViewController {
         correctFormat.dateFormat = "MMM d, H:mm a"
         let stringDate = correctFormat.stringFromDate(date!)
         
-        cell.dateLabel.text = "Apointment: \(stringDate)"
+        cell.dateLabel.text = "Appointment: \(stringDate)"
         
         return cell
     }
