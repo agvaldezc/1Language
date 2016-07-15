@@ -8,14 +8,20 @@
 
 import UIKit
 
-class SelectedRequestViewController: UIViewController {
+class SelectedRequestViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        languages = loadLanguages()
+        departments = loadDepartments()
+        
+        print(languages[0]["languagename"])
+        print(departments)
+        
         prepareNavBar()
         prepareView()
-        print(request!)
+        
         // Do any additional setup after loading the view.
     }
 
@@ -23,6 +29,9 @@ class SelectedRequestViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //Request Information passed by segue
+    var request : NSDictionary?
     
     //Navigation Title Controller
     @IBOutlet weak var requestNavItem: UINavigationItem!
@@ -36,7 +45,7 @@ class SelectedRequestViewController: UIViewController {
     @IBOutlet weak var prescheduleReasonField: UITextField!
     @IBOutlet weak var languageField: UITextField!
     @IBOutlet weak var genderPreferenceField: UITextField!
-    
+    @IBOutlet weak var departmentField: UITextField!
     
     //Navbar items
     var editButton = UIBarButtonItem()
@@ -53,7 +62,16 @@ class SelectedRequestViewController: UIViewController {
     @IBOutlet weak var prescheduleReasonLabel: UILabel!
     @IBOutlet weak var languageLabel: UILabel!
     @IBOutlet weak var genderPreferenceLabel: UILabel!
+    @IBOutlet weak var departmentLabel: UILabel!
     
+    //Data input source arrays
+    let genderPreferences = ["None", "Male", "Female"]
+    var languages : NSArray = []
+    var departments : NSArray = []
+    
+    //Picker view and date picker view declaration
+    let pickerView = UIPickerView()
+    let datePickerView = UIDatePicker()
     
     func enableEditMode(sender: UIBarButtonItem) {
         
@@ -84,9 +102,6 @@ class SelectedRequestViewController: UIViewController {
         requestNavItem.rightBarButtonItem = editButton
     }
     
-    //Request Information passed by segue
-    var request : NSDictionary?
-    
     func editMode(edit : Bool) -> Void {
         
         //Enable/Disable editable fields
@@ -98,6 +113,7 @@ class SelectedRequestViewController: UIViewController {
         prescheduleReasonField.hidden = !edit
         languageField.hidden = !edit
         genderPreferenceField.hidden = !edit
+        departmentField.hidden = !edit
         
         //Enable/Disable info labels
         MRNLabel.hidden = edit
@@ -108,10 +124,26 @@ class SelectedRequestViewController: UIViewController {
         prescheduleReasonLabel.hidden = edit
         languageLabel.hidden = edit
         genderPreferenceLabel.hidden = edit
+        departmentLabel.hidden = edit
         
     }
     
     func prepareView() -> Void {
+        
+        pickerView.delegate = self
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: (#selector(SelectedRequestViewController.updatePicker)), name: UITextFieldTextDidBeginEditingNotification, object: nil)
+        
+        //Tap gesture to hide keyboard or input
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SelectedRequestViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
+        datePickerView.addTarget(self, action: #selector(SelectedRequestViewController.datePickerChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        
+        prescheduleDateField.inputView = datePickerView
+        languageField.inputView = pickerView
+        genderPreferenceField.inputView = pickerView
+        departmentField.inputView = pickerView
         
         //Who made the request
         requestMadeBy.text = "\(request!["clientname"]!)"
@@ -175,6 +207,10 @@ class SelectedRequestViewController: UIViewController {
         genderPreferenceLabel.text = "\(request!["genderpreference"]!)"
         genderPreferenceField.text = "\(request!["genderpreference"]!)"
         
+        //Department selected
+        departmentLabel.text = "\(request!["department"]!)"
+        departmentField.text = "\(request!["department"]!)"
+        
         //Start with edit mode OFF
         editMode(false)
     }
@@ -211,6 +247,142 @@ class SelectedRequestViewController: UIViewController {
         let dateString = requestDateFormatter.stringFromDate(requestDate!)
         
         return dateString
+    }
+    
+    //Load Departments from server
+    func loadDepartments() -> NSArray {
+        
+        //Initial empty array
+        var values : NSArray = []
+        
+        //URL to recover departments
+        let url = NSURL(string: "http://app1anguage.consultinglab.com.mx/public/api/get-departments")
+        
+        //Get data from URL
+        let data = NSData(contentsOfURL: url!)
+        
+        //If data returned is null, show alert to say that service
+        //  is unavailable and return to dashboard
+        if (data == nil) {
+            let alert = UIAlertController(title: "Error", message: "Could not load data from server. Service currently unavailable.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
+                self.navigationController?.popViewControllerAnimated(true)
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+        } else {
+            values = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
+        }
+        
+        return values
+    }
+    
+    //Load languages from server
+    func loadLanguages() -> NSArray {
+        
+        //Initial empty array
+        var values : NSArray = []
+        
+        //URL to recover departments
+        let url = NSURL(string: "http://app1anguage.consultinglab.com.mx/public/api/get-languages")
+        
+        //Get data from URL
+        let data = NSData(contentsOfURL: url!)
+        
+        //If data returned is null, show alert to say that service
+        //  is unavailable and return to dashboard
+        if (data == nil) {
+            let alert = UIAlertController(title: "Error", message: "Could not load data from server. Service currently unavailable.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
+                self.navigationController?.popViewControllerAnimated(true)
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+        } else {
+            values = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
+        }
+        
+        return values
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if (languageField.isFirstResponder() && languages.count > 0) {
+            return languages.count
+        } else if (genderPreferenceField.isFirstResponder()){
+            return genderPreferences.count
+        } else if (departmentField.isFirstResponder() && departments.count > 0){
+            return departments.count
+        } else {
+            return 1
+        }
+
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if (languageField.isFirstResponder() && languages.count > 0) {
+            languageField.text = languages[row]["languagename"] as? String
+        } else if (genderPreferenceField.isFirstResponder()){
+            return genderPreferenceField.text = genderPreferences[row]
+        } else if (departmentField.isFirstResponder() && departments.count > 0){
+            return departmentField.text = departments[row]["departmentname"] as? String
+        } else {
+            return
+        }
+
+        
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if (languageField.isFirstResponder() && languages.count > 0) {
+            return languages[row]["languagename"] as? String
+        } else if (genderPreferenceField.isFirstResponder()){
+            return genderPreferences[row]
+        } else if (departmentField.isFirstResponder() && departments.count > 0){
+            return departments[row]["departmentname"] as? String
+        } else {
+            return "none"
+        }
+
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func updatePicker(){
+        self.pickerView.reloadAllComponents()
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        
+    }
+    
+    func datePickerChanged(datePicker: UIDatePicker) {
+        prescheduleDateField.text = formatDate(datePicker.date)
+        //saveRequestButton.enabled = false
+    }
+    
+    func formatDate(date : NSDate) -> String {
+        let dateFormatter = NSDateFormatter()
+        
+        dateFormatter.dateFormat = "EEEE, MMM d, yyyy HH:mm"
+        
+        return dateFormatter.stringFromDate(date)
+    }
+    
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+        view.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
     }
     
     /*
