@@ -163,7 +163,7 @@ class SelectedRequestViewController: UIViewController, UITextFieldDelegate, UIPi
         
         //patient MRN if available
         if (request!["patientmrn"]! as? NSNull != NSNull()) {
-            patientLabel.text = "\(request!["patientmrn"]!)"
+            patientMRNLabel.text = "\(request!["patientmrn"]!)"
             patientMRNField.text = "\(request!["patientmrn"]!)"
         } else {
             patientLabel.text = "N/A"
