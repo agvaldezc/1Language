@@ -25,43 +25,7 @@ class RequestDashboardViewController: UITableViewController {
             
             accountInfo = AccountInfoController().getAccountInfo()
             
-            let profile = accountInfo["profile"] as! String
-            
-            switch profile {
-            case "interpreter":
-                
-                //Remove add request button from dashboard
-                self.navigationItem.rightBarButtonItem = nil
-                
-                let urlData = "accounttype=\(profile)&username=\(accountInfo["username"] as! String)"
-                
-                getRequests(urlData)
-                break
-                
-            case "client":
-                
-                let urlData = "accounttype=\(profile)&username=\(accountInfo["username"] as! String)"
-                
-                getRequests(urlData)
-                break
-                
-            case "coordinator":
-                
-                let urlData = "accounttype=\(profile)"
-                getRequests(urlData)
-                break
-                
-            case "manager":
-                
-                let urlData = "accounttype=\(profile)"
-                getRequests(urlData)
-                break
-                
-            default:
-                break
-            }
-            
-            table.reloadData()
+            getRequests(accountInfo["profile"] as! String)
             
         } else {
             let alert = AlertsController().confirmationAlert("Error", alertMessage: "You are not connected to the internet. Please try again later.", alertButton: "Ok")
@@ -144,6 +108,24 @@ class RequestDashboardViewController: UITableViewController {
         return cell
     }
     
+    @IBAction func refreshRequestDashboard(sender: AnyObject) -> Void {
+        let alert = AlertsController().confirmationAlert("Alert", alertMessage: "Do you want to refresh your dashboard?", alertButton: "Ok")
+        
+        let okAction = UIAlertAction(title: "Ok", style: .Default) { (UIAlertAction) in
+            self.getRequests(self.accountInfo["profile"] as! String)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func refreshDashboard() -> Void {
+        
+    }
     
     /*
      // Override to support conditional editing of the table view.
@@ -208,7 +190,60 @@ class RequestDashboardViewController: UITableViewController {
         
     }
     
-    func getRequests(urlData : String) {
+    func getRequests(profile : String) {
+        
+        let bounds = UIScreen.mainScreen().bounds
+        
+        let loadingView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height))
+        
+        loadingView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.35)
+        
+        let actInd : UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 0,y: 0, width: 100, height: 100)) as UIActivityIndicatorView
+        actInd.center = self.view.center
+        actInd.hidesWhenStopped = true
+        actInd.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        actInd.layer.cornerRadius = 10
+        
+        let backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.35)
+        
+        actInd.backgroundColor = backgroundColor
+        actInd.startAnimating()
+        
+        loadingView.addSubview(actInd)
+        
+        view.addSubview(loadingView)
+        
+        var urlData : String = ""
+        
+        switch profile {
+        case "interpreter":
+            
+            //Remove add request button from dashboard
+            self.navigationItem.rightBarButtonItem = nil
+            
+            urlData = "accounttype=\(profile)&username=\(accountInfo["username"] as! String)"
+            
+            break
+            
+        case "client":
+            
+            urlData = "accounttype=\(profile)&username=\(accountInfo["username"] as! String)"
+            
+            break
+            
+        case "coordinator":
+            
+            urlData = "accounttype=\(profile)"
+            break
+            
+        case "manager":
+            
+            urlData = "accounttype=\(profile)"
+            break
+            
+        default:
+            break
+        }
         
         let url = "http://app1anguage.consultinglab.com.mx/public/api/get-requests?\(urlData)"
         
@@ -224,6 +259,15 @@ class RequestDashboardViewController: UITableViewController {
         catch
         {
             print("error JSON: \(error)")
+        }
+        
+        table.reloadData()
+        
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            actInd.stopAnimating()
+            
+            loadingView.removeFromSuperview()
         }
     }
 }

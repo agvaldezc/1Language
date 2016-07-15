@@ -6,6 +6,7 @@
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -1896,14 +1897,23 @@
                             <outlet property="delegate" destination="S2b-3m-kNd" id="U3d-96-wOf"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Request Dashboard" id="cmj-wL-hhk">
                         <barButtonItem key="backBarButtonItem" title="Back" id="WRg-hv-L5z"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3rD-fC-QzL">
-                            <connections>
-                                <segue destination="VwW-eU-geG" kind="show" id="or1-fZ-tKg"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="3rD-fC-QzL">
+                                <connections>
+                                    <segue destination="VwW-eU-geG" kind="show" id="or1-fZ-tKg"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="refresh" id="cvV-1k-GIy">
+                                <connections>
+                                    <action selector="refreshRequestDashboard:" destination="S2b-3m-kNd" id="0z7-DP-hcM"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addRequestButton" destination="3rD-fC-QzL" id="7tP-AS-gO5"/>
                         <outlet property="table" destination="h9c-Lq-Oue" id="Hjl-fy-DDl"/>
