@@ -24,8 +24,9 @@ class RequestDashboardViewController: UITableViewController {
         if (Reachability.isConnectedToNetwork()) {
             
             accountInfo = AccountInfoController().getAccountInfo()
+            self.refreshControl?.addTarget(self, action: #selector(RequestDashboardViewController.refreshDashboard), forControlEvents: UIControlEvents.ValueChanged)
             
-            getRequests(accountInfo["profile"] as! String)
+            getRequests()
             
         } else {
             let alert = AlertsController().confirmationAlert("Error", alertMessage: "You are not connected to the internet. Please try again later.", alertButton: "Ok")
@@ -108,23 +109,9 @@ class RequestDashboardViewController: UITableViewController {
         return cell
     }
     
-    @IBAction func refreshRequestDashboard(sender: AnyObject) -> Void {
-        let alert = AlertsController().confirmationAlert("Alert", alertMessage: "Do you want to refresh your dashboard?", alertButton: "Ok")
-        
-        let okAction = UIAlertAction(title: "Ok", style: .Default) { (UIAlertAction) in
-            self.getRequests(self.accountInfo["profile"] as! String)
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
-        
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-    
-    func refreshDashboard() -> Void {
-        
+    func refreshDashboard(refreshControl: UIRefreshControl) -> Void {
+        getRequests()
+        refreshControl.endRefreshing()
     }
     
     /*
@@ -190,28 +177,9 @@ class RequestDashboardViewController: UITableViewController {
         
     }
     
-    func getRequests(profile : String) {
+    func getRequests() {
         
-        let bounds = UIScreen.mainScreen().bounds
-        
-        let loadingView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height))
-        
-        loadingView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.35)
-        
-        let actInd : UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 0,y: 0, width: 100, height: 100)) as UIActivityIndicatorView
-        actInd.center = self.view.center
-        actInd.hidesWhenStopped = true
-        actInd.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-        actInd.layer.cornerRadius = 10
-        
-        let backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.35)
-        
-        actInd.backgroundColor = backgroundColor
-        actInd.startAnimating()
-        
-        loadingView.addSubview(actInd)
-        
-        view.addSubview(loadingView)
+        let profile = accountInfo["profile"] as! String
         
         var urlData : String = ""
         
@@ -262,12 +230,5 @@ class RequestDashboardViewController: UITableViewController {
         }
         
         table.reloadData()
-        
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
-        dispatch_after(delayTime, dispatch_get_main_queue()) {
-            actInd.stopAnimating()
-            
-            loadingView.removeFromSuperview()
-        }
     }
 }
