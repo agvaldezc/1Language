@@ -14,9 +14,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let filePath: String = AccountInfoController().plistFilePath()
+        
+        if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
+            
+            let accountInfo = NSMutableDictionary(contentsOfFile: filePath)
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewControllerWithIdentifier((accountInfo!["profile"] as? String)!)
+            self.window?.rootViewController = vc
+        }
+        
         return true
     }
 
