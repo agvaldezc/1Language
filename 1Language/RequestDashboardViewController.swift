@@ -48,7 +48,7 @@ class RequestDashboardViewController: UITableViewController {
     
     @IBOutlet weak var addRequestButton: UIBarButtonItem!
     var accountInfo : NSDictionary = [:]
-    var requests : NSArray = []
+    var requests : NSMutableArray = []
     var selectedRequest : NSDictionary = [:]
     
     // MARK: - Table view data source
@@ -114,6 +114,93 @@ class RequestDashboardViewController: UITableViewController {
         refreshControl.endRefreshing()
     }
     
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (editingStyle == .Delete) {
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as! RequestTableCell
+            
+            let alert = UIAlertController(title: "Warning", message: "Do you really want to cancel this request?", preferredStyle: .ActionSheet)
+            
+            let cancelRequestAction = UIAlertAction(title: "Cancel Request", style: .Destructive, handler: { (UIAlertAction) in
+                self.cancelRequest(cell.request!["id"] as! String)
+            })
+            
+            let noAction = UIAlertAction(title: "Nevermind", style: .Cancel, handler: nil)
+            
+            alert.addAction(cancelRequestAction)
+            alert.addAction(noAction)
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+        }
+    }
+    
+    func cancelRequest(requestId: String) -> Void {
+        if (Reachability.isConnectedToNetwork()) {
+            let request = NSMutableURLRequest(URL: NSURL(string: "http://app1anguage.consultinglab.com.mx/public/api/cancel-request")!)
+            
+            //Data to use in post method
+            let appData = "requestId=\(requestId)"
+            
+            request.HTTPMethod = "POST"
+            
+            request.HTTPBody = appData.dataUsingEncoding(NSUTF8StringEncoding)
+            
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request)
+            {
+                //Error in session
+                data,response, error in guard error == nil && data != nil else
+                {
+                    print("error=\(error)")
+                    return
+                }
+                
+                print("response =  \(response)")
+                
+                let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                
+                print("responseString = \(responseString)")
+                
+                dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                    //We have a good response from the server
+                    do
+                    {
+                        //Read response as json
+                        let jsonData = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                        
+                        let status = jsonData["status"] as! Int
+                        
+                        if (status > 0) {
+                            let alert = AlertsController().confirmationAlert("Alert", alertMessage: "Your request has been canceled successfully.", alertButton: "Ok")
+                            
+                            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+                            
+                            self.presentViewController(alert, animated: true, completion: nil)
+                            
+                        } else {
+                            let alert = AlertsController().confirmationAlert("Error", alertMessage: "There was an error trying to cancel your request, please try again later.", alertButton: "Ok")
+                            
+                            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+                            
+                            self.presentViewController(alert, animated: true, completion: nil)
+                        }
+                        
+                    } catch {
+                        print("error JSON: \(error)")
+                    }
+                })
+            }
+            
+            task.resume()
+
+        } else {
+            let alert = AlertsController().confirmationAlert("Error", alertMessage: "You are not connected to the internet.", alertButton: "Ok")
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
     /*
      // Override to support conditional editing of the table view.
      override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -177,6 +264,10 @@ class RequestDashboardViewController: UITableViewController {
         
     }
     
+    override func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String? {
+        return "Cancel \nRequest"
+    }
+    
     func getRequests() {
         
         let profile = accountInfo["profile"] as! String
@@ -222,7 +313,7 @@ class RequestDashboardViewController: UITableViewController {
         do
         {
             //Read response as json
-            self.requests = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments) as! NSArray
+            self.requests = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments) as! NSMutableArray
         }
         catch
         {

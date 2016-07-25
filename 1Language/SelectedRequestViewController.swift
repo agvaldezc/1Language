@@ -15,6 +15,7 @@ class SelectedRequestViewController: UIViewController, UITextFieldDelegate, UIPi
         
         languages = loadLanguages()
         departments = loadDepartments()
+        accountInfo = AccountInfoController().getAccountInfo()
         
         print(languages[0]["languagename"])
         print(departments)
@@ -32,6 +33,9 @@ class SelectedRequestViewController: UIViewController, UITextFieldDelegate, UIPi
     
     //Request Information passed by segue
     var request : NSDictionary?
+    
+    //Account info from who is editing
+    var accountInfo : NSDictionary = [:]
     
     //Navigation Title Controller
     @IBOutlet weak var requestNavItem: UINavigationItem!
@@ -78,25 +82,125 @@ class SelectedRequestViewController: UIViewController, UITextFieldDelegate, UIPi
         //Turn edit mode ON
         editMode(true)
         
-        //For debug
-        let alert = AlertsController().errorAlert("Alert", alertMessage: "Edit mode ON", alertButton: "Ok")
-        
-        self.presentViewController(alert, animated: true, completion: nil)
-        
         //Change navbar button
         requestNavItem.rightBarButtonItem = saveChangesButton
-        
     }
     
-    func saveChanges(sender: UIBarButtonItem) {
+    func saveChangesConfirmation(sender: UIBarButtonItem) ->Void {
+        let alert = AlertsController().confirmationAlert("Alert", alertMessage: "Are you sure you want to save this changes?", alertButton: "Ok")
         
-        //Turn edit mode OFF
-        editMode(false)
+        let okAction = UIAlertAction(title: "Save Changes", style: .Default) { (UIAlertAction) in
+            self.saveChanges()
+        }
         
-        //For debug
-        let alert = AlertsController().errorAlert("Alert", alertMessage: "Edit mode OFF", alertButton: "Ok")
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default) { (UIAlertAction) in
+            self.editMode(false)
+            //Change navbar button
+            self.requestNavItem.rightBarButtonItem = self.editButton
+        }
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
         
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func saveChanges() {
+        
+        if (Reachability.isConnectedToNetwork()) {
+            
+            let urlRequest = NSMutableURLRequest(URL: NSURL(string: "http://app1anguage.consultinglab.com.mx/public/api/edit-request")!)
+            
+            //Data to use in post method
+            var appData = "requestId=\(request!["id"]!)&language=\(languageField.text!)&MRN=\(MRNField.text!)&patient=\(patientNameField.text!)&genderpreference=\(genderPreferenceField.text!)&department=\(departmentField.text!)"
+            
+            if (accountInfo["middlename"] != nil) {
+                appData += "&whoedited=\(accountInfo["firstname"]!) \(accountInfo["middlename"]!) \(accountInfo["lastname"]!)"
+            } else {
+                appData += "&whoedited=\(accountInfo["firstname"]!) \(accountInfo["lastname"]!)"
+            }
+            
+            if (commentsField.text?.characters.count > 0) {
+                appData += "&comments=\(commentsField.text!)"
+            }
+            
+            if (prescheduleDateField.text?.characters.count > 0) {
+                
+                let pickedDate = NSDateToMySQL(datePickerView.date)
+                
+                appData += "&prescheduleDate=\(pickedDate)&prescheduleReason=\(prescheduleReasonField.text!)"
+            }
+            
+            if (patientMRNField.text?.characters.count > 0) {
+                appData += "&patientMRN=\(patientMRNField.text!)"
+            }
+            
+            urlRequest.HTTPMethod = "POST"
+            
+            urlRequest.HTTPBody = appData.dataUsingEncoding(NSUTF8StringEncoding)
+            
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(urlRequest)
+            {
+                //Error in session
+                data,response, error in guard error == nil && data != nil else
+                {
+                    print("error=\(error)")
+                    return
+                }
+                
+                print("response =  \(response)")
+                
+                let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                
+                print("responseString = \(responseString)")
+                
+                dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                    //We have a good response from the server
+                    do
+                    {
+                        //Read response as json
+                        let jsonData = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                        
+                        let status = jsonData["status"] as! Int
+                        
+                        if (status > 0) {
+                            let alert = AlertsController().confirmationAlert("Alert", alertMessage: "Your request has been modified successfully.", alertButton: "Ok")
+                            
+                            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
+                                self.navigationController?.popViewControllerAnimated(true)
+                            }))
+                            
+                            self.presentViewController(alert, animated: true, completion: nil)
+                        } else {
+                            let alert = AlertsController().confirmationAlert("Error", alertMessage: "There was an error trying to modify your request, please try again later.", alertButton: "Ok")
+                            
+                            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
+                                self.navigationController?.popViewControllerAnimated(true)
+                            }))
+                            
+                            self.presentViewController(alert, animated: true, completion: nil)
+                        }
+                        
+                    } catch {
+                        print("error JSON: \(error)")
+                    }
+                })
+            }
+            
+            task.resume()
+            
+        } else {
+            let alert = AlertsController().confirmationAlert("Error", alertMessage: "You are not connected to the internet.", alertButton: "Ok")
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
+                self.navigationController?.popViewControllerAnimated(true)
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        
+        //Turn edit mode off
+        editMode(false)
         
         //Change navbar button
         requestNavItem.rightBarButtonItem = editButton
@@ -219,7 +323,7 @@ class SelectedRequestViewController: UIViewController, UITextFieldDelegate, UIPi
         
         //Assign actions to buttons
         editButton.action = #selector(enableEditMode)
-        saveChangesButton.action = #selector(saveChanges)
+        saveChangesButton.action = #selector(saveChangesConfirmation)
         
         //Add target view to each button
         editButton.target = self
@@ -358,7 +462,18 @@ class SelectedRequestViewController: UIViewController, UITextFieldDelegate, UIPi
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
+        if (prescheduleDateField.text?.characters.count > 0) {
+            prescheduleReasonField.enabled = true
+            prescheduleReasonField.placeholder = "Required"
+            prescheduleReasonLabel.enabled = true
+            
+        } else {
+            prescheduleReasonField.enabled = false
+            prescheduleReasonField.placeholder = ""
+            prescheduleReasonLabel.enabled = false
+        }
         
+        saveChangesButton.enabled = validInput()
     }
     
     func datePickerChanged(datePicker: UIDatePicker) {
@@ -383,6 +498,23 @@ class SelectedRequestViewController: UIViewController, UITextFieldDelegate, UIPi
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true
+    }
+    
+    func validInput() -> Bool {
+        if (languageField.text == "" || patientNameField.text == "" || MRNField.text == "" || departmentField.text == "" || (prescheduleReasonField.enabled && prescheduleReasonField.text == "")) {
+            return false
+            
+        } else {
+            return true
+        }
+    }
+    
+    func NSDateToMySQL(date: NSDate) -> String {
+        let dateFormatter = NSDateFormatter()
+        
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        return dateFormatter.stringFromDate(date)
     }
     
     /*
