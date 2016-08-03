@@ -27,6 +27,7 @@ class RequestDashboardViewController: UITableViewController {
             self.refreshControl?.addTarget(self, action: #selector(RequestDashboardViewController.refreshDashboard), forControlEvents: UIControlEvents.ValueChanged)
             
             getRequests()
+            languages = loadLanguages()
             
         } else {
             let alert = AlertsController().confirmationAlert("Error", alertMessage: "You are not connected to the internet. Please try again later.", alertButton: "Ok")
@@ -48,19 +49,25 @@ class RequestDashboardViewController: UITableViewController {
     
     @IBOutlet weak var addRequestButton: UIBarButtonItem!
     var accountInfo : NSDictionary = [:]
-    var requests : NSMutableArray = []
+    var requests : NSArray = []
     var selectedRequest : NSDictionary = [:]
+    var languages : NSArray = []
     
     // MARK: - Table view data source
     
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        return "\(languages[section]["languagename"] as! String) (\(requests[section].count))"
+    }
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return languages.count
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return requests.count
+        return requests[section].count
     }
     
     
@@ -68,8 +75,9 @@ class RequestDashboardViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("requestCell", forIndexPath: indexPath) as! RequestTableCell
         
-        cell.request = requests[indexPath.row] as? NSDictionary
+        cell.request = requests[indexPath.section][indexPath.row] as? NSDictionary
         
+        print(cell.request)
         cell.requestIDLabel.text = "Request ID: \((cell.request!["id"] as? String)!)"
         cell.patientNameLabel.text = "Patient: \((cell.request!["patientname"] as? String)!)"
         cell.languageLabel.text = "Language: \((cell.request!["language"] as? String)!)"
@@ -313,7 +321,7 @@ class RequestDashboardViewController: UITableViewController {
         do
         {
             //Read response as json
-            self.requests = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments) as! NSMutableArray
+            self.requests = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments) as! NSArray
         }
         catch
         {
@@ -321,5 +329,34 @@ class RequestDashboardViewController: UITableViewController {
         }
         
         table.reloadData()
+    }
+    
+    func loadLanguages() -> NSArray {
+        
+        //Initial empty array
+        var values : NSArray = []
+        
+        //URL to recover departments
+        let url = NSURL(string: "http://app1anguage.consultinglab.com.mx/public/api/get-languages")
+        
+        //Get data from URL
+        let data = NSData(contentsOfURL: url!)
+        
+        //If data returned is null, show alert to say that service
+        //  is unavailable and return to dashboard
+        if (data == nil) {
+            let alert = UIAlertController(title: "Error", message: "Could not load data from server. Service currently unavailable.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
+                self.navigationController?.popViewControllerAnimated(true)
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+        } else {
+            values = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
+        }
+        
+        return values
     }
 }
