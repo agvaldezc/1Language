@@ -14,6 +14,10 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        
+        view.addGestureRecognizer(tap)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -199,5 +203,9 @@ class LoginViewController: UIViewController {
             self.presentViewController(alert, animated: true, completion: nil)
             
         }
+    }
+    
+    func hideKeyboard() {
+        view.endEditing(true)
     }
 }

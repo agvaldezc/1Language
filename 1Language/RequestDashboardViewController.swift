@@ -75,9 +75,11 @@ class RequestDashboardViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("requestCell", forIndexPath: indexPath) as! RequestTableCell
         
-        cell.request = requests[indexPath.section][indexPath.row] as? NSDictionary
+        let dictionary = requests[indexPath.section] as! NSArray
+        let unwrappedRequest = dictionary[indexPath.row] as! NSDictionary
         
-        print(cell.request)
+        cell.request = unwrappedRequest
+        
         cell.requestIDLabel.text = "Request ID: \((cell.request!["id"] as? String)!)"
         cell.patientNameLabel.text = "Patient: \((cell.request!["patientname"] as? String)!)"
         cell.languageLabel.text = "Language: \((cell.request!["language"] as? String)!)"
@@ -321,7 +323,7 @@ class RequestDashboardViewController: UITableViewController {
         do
         {
             //Read response as json
-            self.requests = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments) as! NSArray
+            self.requests = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments) as! [AnyObject]
         }
         catch
         {
